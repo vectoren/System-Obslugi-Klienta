@@ -8,16 +8,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SOK_WPF
+namespace SOK_WPF.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy ActiveAdminsPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ActiveAdminsPage : Page
     {
-        public MainWindow()
+        public ActiveAdminsPage()
         {
             InitializeComponent();
         }

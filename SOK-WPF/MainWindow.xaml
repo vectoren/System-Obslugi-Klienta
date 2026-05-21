@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SOK_WPF"
+        xmlns:views="clr-namespace:SOK_WPF.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        FontSize="16"
+        Title="SOK Support Admin" Height="450" Width="800">
+    <Grid ColumnDefinitions="3*,7*">
+        <Frame Grid.Column="0">
+            <Frame.Content>
+                <views:ActiveAdminsPage/>
+            </Frame.Content>
+        </Frame>
     </Grid>
 </Window>

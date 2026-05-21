@@ -17,7 +17,7 @@ namespace SOK_WPF.Models
 
         public DateOnly IssuedOn { get; set; }
         public int[]? ProductsIds { get; set; }
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
         public string? Expectations { get; set; }
         
     }
