@@ -1,9 +1,14 @@
+using Shopper.Services;
+
 namespace Shopper;
 
 public partial class ProductList : ContentPage
 {
-	public ProductList()
+    private readonly RestService _service = new RestService();
+    public ProductList()
 	{
 		InitializeComponent();
 	}
+
+	
 }
