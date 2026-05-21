@@ -46,7 +46,7 @@ Integruje dane wewnętrzne z usługami zewnętrznymi.
                   |     Baza Danych MS SQL      |
                   +--------------+--------------+
                                  |
-                                v^
+                                 v
 
 +------------------------+    +------+------+    +------------------------+
 |  WPF Desktop Dashboard |<-->|  Web API   |<-->| MAUI Multi-platform App |
@@ -155,8 +155,8 @@ Synchronizacja:
 
 | Kategoria | Technologie |
 |---|---|
-| Platforma | .NET 8 / .NET 9 |
-| Język | C# 12 / C# 13 |
+| Platforma | .NET 10 |
+| Język | C# 14 |
 | Baza danych | Microsoft SQL Server |
 | Backend | ASP.NET Core Web API |
 | ORM | Entity Framework Core |
