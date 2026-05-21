@@ -3,17 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Shopper.Models"
              x:Class="Shopper.ProductList"
-             Title="ProductList">
-    <VerticalStackLayout>
-        <RefreshView Grid.Row="1" 
-                     IsRefreshing="{Binding IsRefreshing}" 
-                     Command="{Binding LoadProductsCommand}">
+             Title="Sklep Internetowy">
+    <Grid RowDefinitions="Auto, *">
 
-            <CollectionView ItemsSource="{Binding Products}"
+        <!-- Pasek wyszukiwania -->
+        <SearchBar x:Name="ProductSearchBar"
+                   Grid.Row="0" 
+                   Placeholder="Szukaj produktów..." 
+                   TextChanged="OnSearchBarTextChanged"
+                   Margin="10,5"/>
+
+        <!-- Kontener odświeżania listy -->
+        <RefreshView x:Name="ProductsRefreshView"
+                     Grid.Row="1" 
+                     Refreshing="OnRefreshViewRefreshing">
+
+            <CollectionView x:Name="ProductsCollectionView"
                             SelectionMode="None"
                             Margin="10">
 
-                <!-- Definicja siatki (Layout) - 2 kolumny automatycznie dopasowane -->
+                <!-- Definicja układu: 2 kolumny -->
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" 
                                      Span="2" 
@@ -21,7 +30,7 @@
                                      VerticalItemSpacing="10"/>
                 </CollectionView.ItemsLayout>
 
-                <!-- Wygląd pojedynczej karty produktu -->
+                <!-- Wygląd pojedynczego produktu -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Product">
                         <Border StrokeShape="RoundRectangle 12"
@@ -31,15 +40,14 @@
                                 Padding="10"
                                 HeightRequest="280">
 
-                            <!-- Obsługa kliknięcia w kartę -->
-                            <!--<Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeBinding AncestorType={x:Type viewmodels:ProductsViewModel}}, Path=SelectProductCommand}" 
-                                                      CommandParameter="{Binding .}"/>
-                            </Border.GestureRecognizers>-->
+                            <!-- Wykrywanie kliknięcia w produkt za pomocą gestu -->
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnProductItemTapped"/>
+                            </Border.GestureRecognizers>
 
                             <Grid RowDefinitions="*, Auto, Auto, Auto">
 
-                                <!-- Zdjęcie produktu z FakeStore API -->
+                                <!-- Zdjęcie produktu pobierane z URL -->
                                 <Image Grid.Row="0" 
                                        Source="{Binding Image}" 
                                        Aspect="AspectFit"
@@ -48,7 +56,7 @@
                                        HeightRequest="130"
                                        Margin="0,0,0,10"/>
 
-                                <!-- Kategoria produktu -->
+                                <!-- Kategoria -->
                                 <Label Grid.Row="1" 
                                        Text="{Binding Category}" 
                                        FontSize="10" 
@@ -56,7 +64,7 @@
                                        FontAttributes="Italic"
                                        TextTransform="Uppercase"/>
 
-                                <!-- Tytuł produktu (max 2 linie, ucięty jeśli za długi) -->
+                                <!-- Tytuł (maksymalnie 2 linie) -->
                                 <Label Grid.Row="2" 
                                        Text="{Binding Title}" 
                                        FontAttributes="Bold" 
@@ -66,7 +74,7 @@
                                        Margin="0,2,0,5"
                                        TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
 
-                                <!-- Cena formatowana lokalnie -->
+                                <!-- Cena -->
                                 <Label Grid.Row="3" 
                                        Text="{Binding Price, StringFormat='{0:F2} zł'}" 
                                        TextColor="{StaticResource Primary}" 
@@ -78,10 +86,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
-                <!-- Widok w przypadku braku produktów -->
+                <!-- Widok, gdy lista jest pusta -->
                 <CollectionView.EmptyView>
                     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="30">
-                        <Label Text="Brak dostępnych produktów." 
+                        <Label Text="Nie znaleziono produktów." 
                                HorizontalTextAlignment="Center" 
                                FontSize="16"/>
                     </VerticalStackLayout>
@@ -89,5 +97,5 @@
 
             </CollectionView>
         </RefreshView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
