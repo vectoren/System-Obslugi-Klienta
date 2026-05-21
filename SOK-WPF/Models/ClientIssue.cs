@@ -13,10 +13,11 @@ namespace SOK_WPF.Models
         public int ClientId { get; set; }
 
         public int OrderId { get; set; }
+        public int StatusId { get; set; }
 
         public DateOnly IssuedOn { get; set; }
         public int[]? ProductsIds { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
         public string? Expectations { get; set; }
         
     }
