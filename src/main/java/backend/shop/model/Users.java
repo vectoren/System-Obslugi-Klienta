@@ -1,7 +1,18 @@
+package backend.shop.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+import java.util.Date;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Getters
-@Setters
+@Getter
+@Setter
 @Entity
 // dodaj index na email + dodaj not null'e
 public class Users{

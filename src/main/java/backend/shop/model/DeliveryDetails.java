@@ -1,7 +1,18 @@
+package backend.shop.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+import java.util.Date;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Getters
-@Setters
+@Getter
+@Setter
 @Entity
 public class DeliveryDetails{
     @Id
@@ -15,3 +26,4 @@ public class DeliveryDetails{
     private Date deliveredDate;
     private double deliveryCost;
 }
+

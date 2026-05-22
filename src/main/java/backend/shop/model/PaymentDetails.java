@@ -1,7 +1,18 @@
+package backend.shop.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+import java.util.Date;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Getters
-@Setters
+@Getter
+@Setter
 @Entity
 public class PaymentDetails{
     @Id
@@ -10,6 +21,6 @@ public class PaymentDetails{
     private Date paymentAccomplishedDate;
     private String paymentType;
     private boolean isPaid;
-    
+
 
 }

@@ -1,7 +1,17 @@
+package backend.shop.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Getters
-@Setters
+@Getter
+@Setter
 @Entity
 public class Warnings{
     @Id
@@ -13,5 +23,5 @@ public class Warnings{
     private String type; //warning, error itp
     //połącz klucz
     private int orderId;
-    
+
 }
