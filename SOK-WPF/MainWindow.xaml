@@ -14,5 +14,11 @@
                 <views:ActiveAdminsPage/>
             </Frame.Content>
         </Frame>
+        <Frame Grid.Column="1">
+            <Frame.Content>
+                <views:Dashboard/>
+            </Frame.Content>
+        </Frame>
+
     </Grid>
 </Window>

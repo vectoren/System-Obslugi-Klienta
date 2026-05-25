@@ -18,11 +18,12 @@
 
 
         <ListView ItemsSource="{Binding Admins}"
-                      BorderThickness="0"
-                      Margin="0"
-                      Padding="0"
-                      HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Stretch">
+                  IsEnabled="False"
+                  BorderThickness="0"
+                  Margin="0"
+                  Padding="0"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Stretch">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
