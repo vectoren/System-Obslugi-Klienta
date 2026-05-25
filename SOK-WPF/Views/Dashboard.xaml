@@ -29,7 +29,7 @@
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
         <Grid Width="260" Height="260" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="GoToOrdersCommand"/>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding GoToOrdersCommand}"/>
             </Grid.InputBindings>
             <Ellipse Fill="#f9bc60" Style="{DynamicResource circle}"/>
             <TextBlock Text="Uwagi do&#x0a;zamówień" Style="{DynamicResource InCircle}"/>
@@ -40,7 +40,7 @@
         </Grid>
         <Grid Width="260" Height="260" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="GoToBugsReportsCommand"/>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding GoToBugsReportsCommand}"/>
             </Grid.InputBindings>
             <Ellipse Fill="#f25f4c" Style="{DynamicResource circle}"/>
             <TextBlock Text="Zgłoszone&#x0a;błędy" Style="{DynamicResource InCircle}"/>

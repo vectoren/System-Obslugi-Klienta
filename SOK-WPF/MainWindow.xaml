@@ -14,11 +14,7 @@
                 <views:ActiveAdminsPage/>
             </Frame.Content>
         </Frame>
-        <Frame Grid.Column="1">
-            <Frame.Content>
-                <views:Dashboard/>
-            </Frame.Content>
-        </Frame>
+        <Frame Grid.Column="1" x:Name="MainFrame" NavigationUIVisibility="Hidden" />
 
     </Grid>
 </Window>

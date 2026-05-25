@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SOK_WPF.Views;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +18,18 @@ namespace SOK_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Dashboard dashboard = new Dashboard();
+
+
         public MainWindow()
         {
             InitializeComponent();
+            dashboard.DataContext = new ViewModels.DashboradVM(MainFrame);
+
+
+            MainFrame.Content = dashboard;
+
         }
     }
 }
