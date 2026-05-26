@@ -1,9 +1,6 @@
 package backend.shop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -16,12 +13,14 @@ import java.util.Date;
 public class Warnings{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
+    private Integer warningId;
     private String description;
     private Date recivedDate;
     private boolean isReady;
     private String type; //warning, error itp
-    //połącz klucz
-    private int orderId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId", nullable = false)
+    private Orders orderId;
 
 }

@@ -1,14 +1,10 @@
 package backend.shop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,13 +14,14 @@ import java.util.Map;
 public class Orders{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
-    private Map<Products, Integer> products;
+    private Integer orderId;
+    private String products;
     private BigDecimal wholeCost;
     private Date orderDate;
 
-    //foreign keys to connect
-    private int paymentDetails;
-    private int deliveryDetails;
+    @OneToOne(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private PaymentDetails paymentDetails;
+    @OneToOne(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private DeliveryDetails deliveryDetails;
 
 }

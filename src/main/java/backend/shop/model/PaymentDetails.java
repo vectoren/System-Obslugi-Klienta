@@ -1,10 +1,8 @@
 package backend.shop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.apache.logging.log4j.util.Lazy;
 
 import java.util.Date;
 
@@ -17,10 +15,12 @@ import java.util.Date;
 public class PaymentDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer paymentDetailsId;
     private Date paymentAccomplishedDate;
     private String paymentType;
     private boolean isPaid;
 
-
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId")
+    private Orders orderId;
 }

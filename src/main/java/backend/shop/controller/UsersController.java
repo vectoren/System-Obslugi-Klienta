@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class UsersController{
 
-    private UsersService usersService;
+    private final UsersService usersService;
     public UsersController(UsersService us){
         this.usersService = us;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody Users userData){
+    public ResponseEntity<?> registerUser(@RequestBody Users userData){
         var x = this.usersService.registerUser(userData);
 
         if(x){
-            return new ResponseEntity<String>("User created successfuly", HttpStatusCode.valueOf(200));
+            return new ResponseEntity<>("User created successfuly", HttpStatusCode.valueOf(200));
         }
-        return new ResponseEntity<String>("User created unsuccessfuly", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("User created unsuccessfuly", HttpStatus.BAD_REQUEST);
         
     }
 

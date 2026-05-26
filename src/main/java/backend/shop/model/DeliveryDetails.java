@@ -1,9 +1,6 @@
 package backend.shop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -17,7 +14,7 @@ import java.util.Date;
 public class DeliveryDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer deliveryDetailsId;
     private String region; //Woj
     private String city;//miasto
     private String street;//ulica
@@ -25,5 +22,15 @@ public class DeliveryDetails{
     private String homeNumber;//nr domu
     private Date deliveredDate;
     private double deliveryCost;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="userId")
+    private Users userId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId")
+    private Orders orderId;
+
+
 }
 
