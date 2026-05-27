@@ -1,0 +1,66 @@
+﻿<Page x:Class="SOK_WPF.Views.OrdersIssues"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SOK_WPF.Views"
+      Background="#e3f6f5"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OrdersIssues">
+
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8">
+
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,4"/>
+                <Setter Property="Foreground" Value="#2d334a"/>
+            </Style>
+        </StackPanel.Resources>
+        <Button Content="🔙"
+                Background="Transparent"
+                BorderThickness="0"
+                FontSize="32"
+                HorizontalAlignment="Left"
+                Command="{Binding GoBackCommand}"
+                Margin="0,0,0,8"/>
+        <Grid ColumnDefinitions="*,2*">
+            <ListView Grid.Column="0"
+                      ItemsSource="{Binding IssuesList}"
+                      BorderThickness="0"
+                      SelectedItem="{Binding SelectedIssue}"
+                      Margin="0,0,4,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#fffffe" Margin="0,8" Padding="8">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Id, StringFormat='Zgłoszenie nr {0}'}" FontWeight="SemiBold" Foreground="#272343"/>
+                                <TextBlock Text="{Binding IssuedOn}"/>
+                                <TextBlock Text="{Binding IssueStatus, StringFormat='Status: {0}'}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel
+                        Margin="0,0,8,0" 
+                Grid.Column="1"
+                        Background="#fffffe">
+                <StackPanel Margin="8" DataContext="{Binding SelectedIssue}">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding Name, StringFormat='Błąd: {0}', FallbackValue='(Nie wybrano zgłoszenia)'}" Foreground="#272343"/>
+                    <TextBlock FontWeight="SemiBold" Text="{Binding IssuedOn, StringFormat='Data zgłoszenia: {0}'}" Foreground="#2d334a"/>
+                    <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding OrderId, StringFormat='Dotyczy zamówienia nr {0}'}"/>
+                    <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding IssueStatus, StringFormat='Status zgłoszenia: {0}'}"/>
+                    <TextBlock Text="Opis" Foreground="#2d334a"/>
+                    <TextBox Focusable="False" Text="{Binding Description}"/>
+
+                    <TextBlock Text="Oczekiwania klienta" Foreground="#2d334a"/>
+                    <TextBox Focusable="False" Text="{Binding Expectations}"/>
+
+                    <Button Content="Skontaktuj się z klientem" Command="{Binding ClientContactCommand}"/>
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Page>

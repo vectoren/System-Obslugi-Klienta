@@ -8,15 +8,16 @@ namespace SOK_WPF.Models
     {
         public int Id { get; set; }
 
-        public int TopicId { get; set; }
+        public Topic IssueTopic { get; set; }
 
         public int ClientId { get; set; }
+        public string ClientMail { get; set; }
 
         public int OrderId { get; set; }
-        public int StatusId { get; set; }
+        public string IssueStatus { get; set; }
 
         public DateOnly IssuedOn { get; set; }
-        public int[]? ProductsIds { get; set; }
+        public List<Product> AffectedProducts { get; set; }
         public string? Description { get; set; }
         public string? Expectations { get; set; }
         

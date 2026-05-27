@@ -14,19 +14,21 @@ namespace SOK_WPF.ViewModels
         public Frame MainFrame { get; set; }
 
         [ObservableProperty]
-        public List<BugReport> bugReports = new();
+        public List<BugReport> bugReportsList = new();
 
         BugReports bugReportsView { get; set; }
+        OrdersIssues ordersIssuesView { get; set; }
 
         public DashboradVM(Frame frame)
         {
             MainFrame = frame;
             bugReportsView = new BugReports(MainFrame);
+            ordersIssuesView = new OrdersIssues(MainFrame);
         }
 
 
         [RelayCommand]
-        void GoToOrders() => MainFrame.Content = bugReportsView;
+        void GoToOrders() => MainFrame.Content = ordersIssuesView;
 
 
         [RelayCommand]
