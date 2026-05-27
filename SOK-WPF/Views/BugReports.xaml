@@ -29,13 +29,16 @@
                       ItemsSource="{Binding BugReports}"
                       BorderThickness="0"
                       SelectedItem="{Binding SelectedReport}"
+                      
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
                       Margin="0,0,4,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border Background="#fffffe" Margin="0,8" Padding="8">
                             <StackPanel>
                                 <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#272343"/>
-                                <TextBlock Text="{Binding ReportDay}"/>
+                                <TextBlock Text="{Binding ReportDay, StringFormat='{}{0:dd.MM.yyyy}'}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -47,7 +50,7 @@
                         Background="#fffffe">
                 <StackPanel Margin="8" DataContext="{Binding SelectedReport}">
                     <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding Name, StringFormat='Błąd: {0}', FallbackValue='(Nie wybrano błędu)'}" Foreground="#272343"/>
-                    <TextBlock FontWeight="SemiBold" Text="{Binding ReportDay, StringFormat='Data zgłoszenia: {0}'}" Foreground="#2d334a"/>
+                    <TextBlock FontWeight="SemiBold" Text="{Binding ReportDay, StringFormat='Data zgłoszenia: {0:dd.MM.yyyy}'}" Foreground="#2d334a"/>
                     <TextBlock Text="Opis" Foreground="#2d334a"/>
                     <TextBox VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding Description}" Focusable="False"/>
                 </StackPanel>

@@ -8,7 +8,7 @@ namespace SOK_WPF.Models
     {
         public int Id { get; set; }
 
-        public Topic IssueTopic { get; set; }
+        public string IssueTopic { get; set; }
 
         public int ClientId { get; set; }
         public string ClientMail { get; set; }
