@@ -14,7 +14,11 @@
     </Page.DataContext>
 
     <StackPanel Margin="8">
-        <TextBlock Text="Active Admins" FontSize="24" FontWeight="SemiBold" Foreground="#272343" TextWrapping="Wrap"/>
+        <TextBlock Text="Active Admins"
+                   FontSize="24"
+                   FontWeight="SemiBold"
+                   Foreground="#272343"
+                   TextWrapping="Wrap"/>
 
 
         <ListView ItemsSource="{Binding Admins}"
@@ -29,23 +33,27 @@
                 <DataTemplate>
                     <Border Background="#272343"
                                 Padding="12"
-                                Margin="0,5,0,5">
+                                Margin="0,5,0,5"
+                                CornerRadius="8">
                         <StackPanel>
+
                             <DockPanel LastChildFill="False">
                                 <TextBlock Text="{Binding Name}"
                                            FontWeight="SemiBold"
                                            Foreground="#fffffe"
                                            DockPanel.Dock="Left"/>
-
-                                <TextBlock Text="{Binding Role}"
+                                <Border DockPanel.Dock="Right" 
+                                           Background="#bae8e8"
+                                           CornerRadius="3">
+                                    <TextBlock Text="{Binding Role}"
                                            FontSize="10"
                                            FontWeight="SemiBold"
-                                           Background="#bae8e8"
                                            Foreground="#272343"
-                                           Padding="4,2"
-                                           DockPanel.Dock="Right"/>
+                                           Padding="4,2"/>
+                                </Border>
                             </DockPanel>
-                            <TextBlock Text="{Binding Email}" Foreground="#e3f6f5"/>
+                            <TextBlock Text="{Binding Email}"
+                                       Foreground="#e3f6f5"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

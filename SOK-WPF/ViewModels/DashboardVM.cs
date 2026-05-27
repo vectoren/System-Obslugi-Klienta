@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SOK_WPF.Models;
+using SOK_WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,18 +15,22 @@ namespace SOK_WPF.ViewModels
 
         [ObservableProperty]
         public List<BugReport> bugReports = new();
+
+        BugReports bugReportsView { get; set; }
+
         public DashboradVM(Frame frame)
         {
             MainFrame = frame;
+            bugReportsView = new BugReports(MainFrame);
         }
 
 
         [RelayCommand]
-        void GoToOrders() => MainFrame.Content = new Views.BugReports();
+        void GoToOrders() => MainFrame.Content = bugReportsView;
 
 
         [RelayCommand]
-        void GoToBugsReports() => MainFrame.Content = new Views.BugReports();
+        void GoToBugsReports() => MainFrame.Content = bugReportsView;
 
     }
 }

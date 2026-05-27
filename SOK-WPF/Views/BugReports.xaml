@@ -3,12 +3,55 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SOK_WPF.Views"
+      xmlns:local="clr-namespace:SOK_WPF.Views" xmlns:viewmodels="clr-namespace:SOK_WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:BugReportsVM}"
+      Background="#e3f6f5"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BugReports">
 
-    <Grid>
-        <TextBlock Text="Bug reports works!"/>
-    </Grid>
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8">
+
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,4"/>
+                <Setter Property="Foreground" Value="#2d334a"/>
+            </Style>
+        </StackPanel.Resources>
+        <Button Content="🔙"
+                Background="Transparent"
+                BorderThickness="0"
+                FontSize="32"
+                HorizontalAlignment="Left"
+                Command="{Binding GoBackCommand}"
+                Margin="0,0,0,8"/>
+        <Grid ColumnDefinitions="*,2*">
+            <ListView Grid.Column="0"
+                      ItemsSource="{Binding BugReports}"
+                      BorderThickness="0"
+                      SelectedItem="{Binding SelectedReport}"
+                      Margin="0,0,4,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#fffffe" Margin="0,8" Padding="8">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#272343"/>
+                                <TextBlock Text="{Binding ReportDay}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel
+                        Margin="0,0,8,0" 
+                Grid.Column="1"
+                        Background="#fffffe">
+                <StackPanel Margin="8" DataContext="{Binding SelectedReport}">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding Name, StringFormat='Błąd: {0}', FallbackValue='(Nie wybrano błędu)'}" Foreground="#272343"/>
+                    <TextBlock FontWeight="SemiBold" Text="{Binding ReportDay, StringFormat='Data zgłoszenia: {0}'}" Foreground="#2d334a"/>
+                    <TextBlock Text="Opis" Foreground="#2d334a"/>
+                    <TextBox VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding Description}" Focusable="False"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </Page>
