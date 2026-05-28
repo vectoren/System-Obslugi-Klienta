@@ -6,7 +6,9 @@ import backend.shop.repo.UsersRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserProfilerService implements UserDetailsService {
     private final UsersRepo repo;
 
