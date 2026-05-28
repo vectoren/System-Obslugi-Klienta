@@ -7,6 +7,8 @@ namespace Shopper
         public App()
         {
             InitializeComponent();
+
+            MainPage = new NavigationPage(new ProductList());
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

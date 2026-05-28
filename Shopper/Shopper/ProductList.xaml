@@ -84,7 +84,7 @@
                             </Grid>
                         </Border>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
+                </CollectionView.ItemTemplate>          
 
                 <!-- Widok, gdy lista jest pusta -->
                 <CollectionView.EmptyView>

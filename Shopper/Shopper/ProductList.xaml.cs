@@ -25,9 +25,13 @@ public partial class ProductList : ContentPage
         }
     }
 
-    private void OnProductItemTapped(object sender, TappedEventArgs e)
+    private async void OnProductItemTapped(object sender, TappedEventArgs e)
     {
-
+        if (sender is Border border && border.BindingContext is Product wybranyProdukt)
+        {
+       
+            await Navigation.PushAsync(new ProductDetails(wybranyProdukt));
+        }
     }
 
     private void OnRefreshViewRefreshing(object sender, EventArgs e)
