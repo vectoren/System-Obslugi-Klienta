@@ -9,9 +9,10 @@ public partial class ProductList : ContentPage
 	public ProductList()
 	{
 		InitializeComponent();
+        PobierzDane();
 	}
 
-    private async void PobierzDane(object sender, EventArgs e)
+    private async void PobierzDane()
     {
         try
         {
@@ -20,7 +21,7 @@ public partial class ProductList : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Błąd połączenia", $"Nie udało się pobrać danych: {ex.Message}", "OK");
+            await DisplayAlertAsync("Błąd połączenia", $"Nie udało się pobrać danych: {ex.Message}", "OK");
         }
     }
 
