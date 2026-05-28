@@ -1,6 +1,7 @@
 package backend.shop.config;
 
 import backend.shop.service.UserProfilerService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,33 @@ public class SecurityConfig {
     public SecurityFilterChain userDetails(HttpSecurity http){
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        r -> r.requestMatchers("/api/register", "/api/login", "/login").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(f -> f.loginProcessingUrl("/api/login"))
-                .httpBasic(AbstractHttpConfigurer::disable)
+                        r ->
+                                r.requestMatchers("/api/register", "/api/login", "/login").permitAll()
+                                .anyRequest().authenticated())
+                .formLogin(f ->
+                        f.loginProcessingUrl("/api/login")
+                                .usernameParameter("username")
+                                .passwordParameter("password")
+                                .successHandler(((request, response, authentication) -> {
+                                    response.setStatus(HttpServletResponse.SC_OK);
+                                }))
+                                .failureHandler(((request, response, exception) -> {
+                                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                                })
+                                )
+                )
+                .exceptionHandling(e -> e
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("Unauthorized - Brak dostepu.");
+                })
+                )
+                .logout(l ->
+                        l.logoutUrl("/api/logout")
+                                .logoutSuccessHandler(((request, response, authentication) -> {
+                                    response.setStatus(HttpServletResponse.SC_OK);
+                                }))
+                )
                 .build();
 
     }
