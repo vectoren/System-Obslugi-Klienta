@@ -28,9 +28,4 @@ public class UsersController{
         
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<?> getAllProducts(){
-        return new ResponseEntity<>("Działa", HttpStatusCode.valueOf(200));
-    }
-
 }

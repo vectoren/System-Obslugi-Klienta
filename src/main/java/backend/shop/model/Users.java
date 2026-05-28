@@ -12,6 +12,12 @@ import java.util.Set;
 
 // dodaj index na email + dodaj not null'e
 @Entity
+@Table(
+        name = "users",
+        indexes = {
+                @Index(name = "email_index", columnList = "email", unique = true),
+        }
+)
 public class Users{
 
     public Users(){}
@@ -96,8 +102,12 @@ public class Users{
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String password;
+
     private Set<String> role;
     @CreationTimestamp
     private LocalDate accountCreationDate;
