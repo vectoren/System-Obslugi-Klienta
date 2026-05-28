@@ -72,10 +72,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ProductDetails.xaml">
+	  <MauiXaml Update="Views\ProductDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ProductList.xaml">
+	  <MauiXaml Update="Views\ProductList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">

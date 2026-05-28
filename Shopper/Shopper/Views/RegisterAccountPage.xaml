@@ -74,7 +74,8 @@
                                 Background="Transparent" 
                                 TextColor="#512BD4" 
                                 FontAttributes="Bold"
-                                Padding="0"/>
+                                Padding="0"
+                                Clicked="GoLogin"/>
                     </HorizontalStackLayout>
 
                 </Grid>

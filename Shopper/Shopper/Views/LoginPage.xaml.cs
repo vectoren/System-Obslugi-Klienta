@@ -6,4 +6,13 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void GoRegister(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+
+            await Navigation.PushAsync(new RegisterAccountPage());
+        }
+    }
 }
