@@ -26,26 +26,17 @@ public partial class LoginPage : ContentPage
         try
         {
             LoadingOverlay.IsVisible = true;
-            await Task.Run(async () =>
+            await Task.Yield();
+
+            bool res = await DBRestService.Login(_email, _password);
+            if (res)
             {
-                bool res = await DBRestService.Login(_email, _password);
-                if (res)
-                {
-                    await Dispatcher.DispatchAsync(() =>
-                    {
-                        Shell.Current.GoToAsync("list");
-                    });
-
-                }
-                else
-                {
-                    await Dispatcher.DispatchAsync(async () =>
-                    {
-                       throw new Exception("Login failed. Please check your credentials and try again.");
-                    });
-                }
-
-            });
+                await Shell.Current.GoToAsync("list");
+            }
+            else
+            {
+                throw new Exception("Logowanie nie powiodło się. Sprawdź dane i spróbuj ponownie.");
+            }
         }
         catch (Exception ex)
         {

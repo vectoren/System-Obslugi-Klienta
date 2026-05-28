@@ -33,28 +33,20 @@ public partial class RegisterAccountPage : ContentPage
         Account newAccount = new Account(fname.Text, lname.Text, email.Text, password.Text);
         try
         {
-            RegisterLoadingGif.IsVisible = true;
-            await Task.Run(async () =>
+            RegisterLoadingOverlay.IsVisible = true;
+            await Task.Yield();
+
+            (string, bool) res = await DBRestService.RegisterUser(newAccount);
+            if (res.Item2)
             {
-                (string, bool) res = await DBRestService.RegisterUser(newAccount);
-                if (res.Item2)
-                {
-                    await Dispatcher.DispatchAsync(() =>
-                    {
-                        Shell.Current.GoToAsync("list");
-                    });
-
-                }
-                else
-                {
-                    await Dispatcher.DispatchAsync(async () =>
-                    {
-                        throw new Exception("Login failed. Please check your credentials and try again.");
-                    });
-
-                }
-
-            });
+                await Shell.Current.GoToAsync("list");
+            }
+            else
+            {
+                throw new Exception(string.IsNullOrWhiteSpace(res.Item1)
+                    ? "Rejestracja nie powiodła się. Spróbuj ponownie."
+                    : res.Item1);
+            }
         }
         catch (Exception ex)
         {
@@ -62,7 +54,7 @@ public partial class RegisterAccountPage : ContentPage
         }
         finally
         {
-            RegisterLoadingGif.IsVisible = false;
+            RegisterLoadingOverlay.IsVisible = false;
         }
        
 
