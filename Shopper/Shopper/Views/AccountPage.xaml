@@ -6,7 +6,7 @@
              BackgroundColor="{AppThemeBinding Light=#F5F5F7, Dark=#121212}">
 
     <ScrollView>
-        <Grid ColumnDefinitions="*, 500, *" Padding="0,20">
+        <Grid ColumnDefinitions="*, 400, *" Padding="0,20">
             <VerticalStackLayout Grid.Column="1" Spacing="20" Margin="20,0">
 
                 <Border StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" Padding="20">
