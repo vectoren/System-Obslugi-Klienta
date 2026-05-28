@@ -74,4 +74,9 @@ public partial class ProductList : ContentPage
             }
         }
     }
+
+    private void OnProfileIconClicked(object sender, EventArgs e)
+    {
+
+    }
 }

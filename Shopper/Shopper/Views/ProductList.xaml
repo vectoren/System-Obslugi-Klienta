@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Shopper.Models"
-             x:Class="Shopper.ProductList"
+             x:Class="Shopper.Views.ProductList"
              Title="Sklep Internetowy">
     <Grid RowDefinitions="Auto, *">
 
