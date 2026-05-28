@@ -7,13 +7,14 @@
     xmlns:views="clr-namespace:Shopper.Views"
     Title="Shopper">
 
-    <TabBar>
+    <!--<TabBar>
         <Tab Title="Sklep">
             <ShellContent ContentTemplate="{DataTemplate views:ProductList}" />
         </Tab>
         <Tab Title="Konto">
             <ShellContent ContentTemplate="{DataTemplate views:AccountPage}" />
         </Tab>
-    </TabBar>
+    </TabBar> -->
+    <ShellContent ContentTemplate="{DataTemplate views:RegisterAccountPage}" />
 
 </Shell>
