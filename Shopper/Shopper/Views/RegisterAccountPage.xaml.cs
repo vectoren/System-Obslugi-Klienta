@@ -51,6 +51,7 @@ public partial class RegisterAccountPage : ContentPage
                     {
                         throw new Exception("Login failed. Please check your credentials and try again.");
                     });
+
                 }
 
             });
