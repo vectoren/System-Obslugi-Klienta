@@ -1,6 +1,6 @@
 using Shopper.Models;
 
-namespace Shopper;
+namespace Shopper.Views;
 
 public partial class ProductDetails : ContentPage
 {

@@ -2,7 +2,7 @@ using Shopper.Models;
 using Shopper.Services;
 using System.Collections.ObjectModel;
 
-namespace Shopper;
+namespace Shopper.Views;
 
 public partial class ProductList : ContentPage
 {
@@ -75,8 +75,11 @@ public partial class ProductList : ContentPage
         }
     }
 
-    private void OnProfileIconClicked(object sender, EventArgs e)
+    private async void OnProfileIconClicked(object sender, EventArgs e)
     {
-
+        if (sender is Button button)
+        {
+            await Shell.Current.GoToAsync("/account");
+        }
     }
 }
