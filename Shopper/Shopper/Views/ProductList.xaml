@@ -6,13 +6,25 @@
              Title="Sklep Internetowy">
     <Grid RowDefinitions="Auto, *">
 
-        <!-- Pasek wyszukiwania -->
-        <SearchBar x:Name="ProductSearchBar"
-                   Grid.Row="0" 
-                   Placeholder="Szukaj produktów..." 
-                   TextChanged="OnSearchBarTextChanged"
-                   Margin="10,5"/>
-        
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="10,5" VerticalOptions="Center">
+
+            <SearchBar x:Name="ProductSearchBar"
+                       Grid.Column="0" 
+                       Placeholder="Szukaj produktów..." 
+                       TextChanged="OnSearchBarTextChanged"
+                       Margin="0,0,5,0"/>
+
+            <Button Grid.Column="1"
+                    Text="👤"
+                    FontSize="20"
+                    WidthRequest="45"
+                    HeightRequest="45"
+                    CornerRadius="22"
+                    Padding="0"
+                    BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    Clicked="OnProfileIconClicked"/>
+        </Grid>
 
         <!-- Kontener odświeżania listy -->
         <RefreshView x:Name="ProductsRefreshView"
