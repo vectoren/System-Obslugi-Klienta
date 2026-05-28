@@ -29,7 +29,7 @@ namespace Shopper.Services
             return;
         }
 
-        private async static Task<(string, bool)> RegisterUser(Account account)
+        public async static Task<(string, bool)> RegisterUser(Account account)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace Shopper.Services
 
         }
 
-        private async static Task<bool> Login(string email, string password)
+        public async static Task<bool> Login(string email, string password)
         {
             try
             {

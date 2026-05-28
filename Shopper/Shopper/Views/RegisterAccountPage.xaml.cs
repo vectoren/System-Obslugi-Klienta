@@ -1,4 +1,6 @@
 using Shopper.Models;
+using Shopper.Services;
+using System.Net;
 using System.Net.Http.Json;
 
 namespace Shopper.Views;
@@ -29,20 +31,39 @@ public partial class RegisterAccountPage : ContentPage
             return;
         }
         Account newAccount = new Account(fname.Text, lname.Text, email.Text, password.Text);
-        // Tutaj możesz dodać logikę do zapisania nowego konta, np. wysłanie danych do serwera lub zapisanie lokalnie
-        await DisplayAlertAsync("SUKCES", "Konto zostało zarejestrowane.", "OK");
-        HttpClient client = new HttpClient();
-        client.BaseAddress = new Uri("http://10.0.2.2:8080/");
-        var response = await client.PostAsJsonAsync("api/register", newAccount);
-        if(response.IsSuccessStatusCode)
+        try
         {
-            await DisplayAlertAsync("SUKCES", "Konto zostało zarejestrowane na serwerze.", "OK");
-        }
-        else
-        {
-            await DisplayAlertAsync("BŁĄD", "Nie udało się zarejestrować konta na serwerze.", "OK");
-        }
+            RegisterLoadingGif.IsVisible = true;
+            await Task.Run(async () =>
+            {
+                (string, bool) res = await DBRestService.RegisterUser(newAccount);
+                if (res.Item2)
+                {
+                    await Dispatcher.DispatchAsync(() =>
+                    {
+                        Shell.Current.GoToAsync("list");
+                    });
 
+                }
+                else
+                {
+                    await Dispatcher.DispatchAsync(async () =>
+                    {
+                        throw new Exception("Login failed. Please check your credentials and try again.");
+                    });
+                }
+
+            });
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("ERROR", ex.Message, "OK");
+        }
+        finally
+        {
+            RegisterLoadingGif.IsVisible = false;
+        }
+       
 
     }
 }

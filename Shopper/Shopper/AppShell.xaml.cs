@@ -8,6 +8,9 @@ namespace Shopper
         {
             InitializeComponent();
             Routing.RegisterRoute("account", typeof(AccountPage));
+            Routing.RegisterRoute("login", typeof(LoginPage));
+            Routing.RegisterRoute("list", typeof(ProductList));
+
         }
     }
 }
