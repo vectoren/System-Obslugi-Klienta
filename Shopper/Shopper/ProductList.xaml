@@ -12,6 +12,7 @@
                    Placeholder="Szukaj produktów..." 
                    TextChanged="OnSearchBarTextChanged"
                    Margin="10,5"/>
+        
 
         <!-- Kontener odświeżania listy -->
         <RefreshView x:Name="ProductsRefreshView"

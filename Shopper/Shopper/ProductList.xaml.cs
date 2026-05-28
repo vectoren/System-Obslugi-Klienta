@@ -1,12 +1,16 @@
 using Shopper.Models;
 using Shopper.Services;
+using System.Collections.ObjectModel;
 
 namespace Shopper;
 
 public partial class ProductList : ContentPage
 {
     private readonly RestService _service = new RestService();
-	public ProductList()
+
+    private ObservableCollection<Product> _displayedProducts = [];
+    private List<Product> _allProducts = [];
+    public ProductList()
 	{
 		InitializeComponent();
         PobierzDane();
@@ -16,8 +20,18 @@ public partial class ProductList : ContentPage
     {
         try
         {
-            List <Product> dane = await _service.GetProductsAsync();
-            ProductsCollectionView.ItemsSource = dane;
+            var products = await _service.GetProductsAsync();
+
+            if (products is not null)
+            {
+                _allProducts.Clear();
+                _allProducts.AddRange(products);
+
+                // Aktualizacja wyświetlanej listy
+                FilterAndDisplayProducts();
+            }
+
+            ProductsCollectionView.ItemsSource = _displayedProducts;
         }
         catch (Exception ex)
         {
@@ -41,6 +55,23 @@ public partial class ProductList : ContentPage
 
     private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)
     {
+        FilterAndDisplayProducts();
+    }
 
+    private void FilterAndDisplayProducts()
+    {
+        string query = ProductSearchBar.Text?.Trim().ToLower() ?? string.Empty;
+
+        _displayedProducts.Clear();
+
+        foreach (var product in _allProducts)
+        {
+            if (string.IsNullOrWhiteSpace(query) ||
+                product.Title.ToLower().Contains(query) ||
+                product.Category.ToLower().Contains(query))
+            {
+                _displayedProducts.Add(product);
+            }
+        }
     }
 }
