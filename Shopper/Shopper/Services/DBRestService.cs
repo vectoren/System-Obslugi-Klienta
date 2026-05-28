@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Shopper.Models;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 namespace Shopper.Services
 {
@@ -9,6 +11,7 @@ namespace Shopper.Services
     {
         private static HttpClient httpClient;
         private static CookieContainer cookieContainer;
+        private static readonly string baseUrl = "http://10.0.0.2:8080/api{0}";
 
         private static void GetClient()
         {
@@ -20,6 +23,70 @@ namespace Shopper.Services
                     CookieContainer = cookieContainer,
                     UseCookies = true
                 };
+                httpClient = new HttpClient(handler);
+
+            }
+            return;
+        }
+
+        private async static Task<(string, bool)> RegisterUser(Account account)
+        {
+            try
+            {
+                GetClient();
+
+                Uri uri = new Uri(string.Format(baseUrl, "/register"));
+                var json = JsonSerializer.Serialize(account);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PostAsync(uri, content);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    return ("Registration successful", true);
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new Exception(errorMessage);
+                }
+
+
+            }
+            catch(Exception ex) 
+            {
+                return (ex.Message, false);
+            }
+
+        }
+
+        private async static Task<bool> Login(string email, string password)
+        {
+            try
+            {
+                GetClient();
+                Uri uri = new Uri(string.Format(baseUrl, "/login"));
+
+                var keyValuePairs = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("username",email),
+                    new KeyValuePair<string, string>("password", password)
+                };
+
+                var content = new FormUrlEncodedContent(keyValuePairs);
+
+                var response = await httpClient.PostAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }
