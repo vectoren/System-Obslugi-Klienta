@@ -11,9 +11,6 @@ namespace Shopper
             MainPage = new NavigationPage(new ProductList());
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+        
     }
 }
