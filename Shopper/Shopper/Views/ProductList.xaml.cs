@@ -82,4 +82,12 @@ public partial class ProductList : ContentPage
             await Shell.Current.GoToAsync("/account");
         }
     }
+
+    private async void OnCartIconClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            await Shell.Current.GoToAsync("/shopping-cart");
+        }
+    }
 }
