@@ -21,8 +21,8 @@ public class UsersController{
     public ResponseEntity<?> registerUser(@RequestBody Users userData){
         var x = this.usersService.registerUser(userData);
 
-        if(x){
-            return new ResponseEntity<>("User created successfuly", HttpStatusCode.valueOf(200));
+        if(x.isPresent()){
+            return new ResponseEntity<>(x.get(), HttpStatusCode.valueOf(200));
         }
         return new ResponseEntity<>("User created unsuccessfuly", HttpStatus.BAD_REQUEST);
         

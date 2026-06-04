@@ -5,6 +5,8 @@ import backend.shop.repo.UsersRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsersService {
     private final UsersRepo repo;
@@ -13,15 +15,16 @@ public class UsersService {
         this.repo = repo;
     }
 
-    public boolean registerUser(Users user){
+    public Optional<Users> registerUser(Users user){
         try{
+            Users userCopy = new Users(user);
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-            var x = repo.save(user);
-            return true;
+            repo.save(user);
+            return Optional.of(userCopy);
 
         }
         catch (Exception ex){
-            return false;
+            return Optional.empty();
         }
     }
 }

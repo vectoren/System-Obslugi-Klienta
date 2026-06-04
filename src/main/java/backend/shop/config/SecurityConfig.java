@@ -1,5 +1,7 @@
 package backend.shop.config;
 
+import backend.shop.model.UserProfiler;
+import backend.shop.model.Users;
 import backend.shop.service.UserProfilerService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import tools.jackson.databind.ObjectMapper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class SecurityConfig {
@@ -30,7 +36,24 @@ public class SecurityConfig {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .successHandler(((request, response, authentication) -> {
+                                    UserProfiler userProfiler = (UserProfiler) authentication.getPrincipal();
+                                    Users user = (Users) userProfiler.getUser();
+
                                     response.setStatus(HttpServletResponse.SC_OK);
+                                    response.setContentType("application/json");
+                                    response.setCharacterEncoding("UTF-8");
+
+                                    var responseBody = Map.of(
+                                                "userId", user.getUserId(),
+                                                "firstName", user.getFirstName() != null ? user.getFirstName() : "",
+                                                "lastName", user.getLastName() != null ? user.getLastName() : "",
+                                                "email", user.getEmail(),
+                                                "role", user.getRole() != null ? user.getRole() : java.util.Collections.emptySet(),
+                                                "accountCreationDate", user.getAccountCreationDate() != null ? user.getAccountCreationDate().toString() : "",
+                                                "deliveryDetails", user.getDeliveryDetails() != null ? user.getDeliveryDetails() : ""
+                                    );
+                                    ObjectMapper om = new ObjectMapper();
+                                    om.writeValue(response.getWriter(), responseBody);
                                 }))
                                 .failureHandler(((request, response, exception) -> {
                                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

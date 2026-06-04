@@ -1,5 +1,6 @@
 package backend.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +11,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
-// dodaj index na email + dodaj not null'e
 @Entity
 @Table(
         name = "users",
@@ -85,15 +85,22 @@ public class Users{
         this.deliveryDetails = deliveryDetails;
     }
 
-    public Users(Integer userId, String firstName, String lastName, String email, String password, Set<String> role, LocalDate accountCreationDate, DeliveryDetails deliveryDetails) {
-        this.userId = userId;
+    public Users(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = role;
-        this.accountCreationDate = accountCreationDate;
-        this.deliveryDetails = deliveryDetails;
+        this.role = Set.of("USER");
+    }
+
+    public Users(Users user) {
+        this.userId = user.userId;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.password = user.password;
+        this.role = user.role;
+        this.accountCreationDate = user.accountCreationDate;
     }
 
     @Id
@@ -109,9 +116,24 @@ public class Users{
     private String password;
 
     private Set<String> role;
+
     @CreationTimestamp
     private LocalDate accountCreationDate;
 
     @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DeliveryDetails deliveryDetails;
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", accountCreationDate=" + accountCreationDate +
+                ", deliveryDetails=" + deliveryDetails +
+                '}';
+    }
 }

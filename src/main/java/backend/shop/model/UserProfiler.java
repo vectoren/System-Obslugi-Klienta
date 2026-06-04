@@ -18,9 +18,10 @@ public class UserProfiler implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return user.getRole().stream()
+            return List.of();
+        /*return user.getRole().stream()
                 .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     @Override
@@ -52,4 +53,6 @@ public class UserProfiler implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Users getUser(){ return this.user;}
 }
