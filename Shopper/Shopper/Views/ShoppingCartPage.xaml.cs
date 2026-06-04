@@ -54,8 +54,8 @@ public partial class ShoppingCartPage : ContentPage
 
     private async void OnCheckoutClicked(object sender, EventArgs e)
     {
-        if (CartItems.Count == 0) return;
+        //if (CartItems.Count == 0) return;
 
-        await DisplayAlert("Kasa", "Przekierowanie do płatności...", "OK");
+        await Shell.Current.GoToAsync("checkout");
     }
 }

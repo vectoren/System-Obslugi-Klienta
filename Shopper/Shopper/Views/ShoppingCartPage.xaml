@@ -6,7 +6,6 @@
              Title="Koszyk">
     <Grid RowDefinitions="*, Auto">
 
-        
         <CollectionView Grid.Row="0" 
                         x:Name="CartCollectionView"
                         Margin="10"
@@ -21,10 +20,8 @@
                             Padding="10"
                             Margin="0,0,0,10">
 
-                       
                         <Grid ColumnDefinitions="*, Auto" ColumnSpacing="15">
 
-                            
                             <HorizontalStackLayout Grid.Column="0" Spacing="12" VerticalOptions="Center">
                                 <Border StrokeShape="RoundRectangle 8" 
                                         StrokeThickness="0"
@@ -51,17 +48,14 @@
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
 
-                            
                             <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Spacing="8">
 
-                                
                                 <Label Text="{Binding TotalPrice, StringFormat='{0:F2} zł'}" 
                                        TextColor="{StaticResource Primary}" 
                                        FontAttributes="Bold" 
                                        FontSize="16"
                                        HorizontalOptions="End"/>
 
-                                
                                 <HorizontalStackLayout Spacing="5" HorizontalOptions="End">
                                     <Button Text="-"
                                             WidthRequest="32"
@@ -100,7 +94,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
-            
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="30" Spacing="10">
                     <Label Text="🛒" FontSize="50" HorizontalTextAlignment="Center"/>
@@ -109,7 +102,6 @@
             </CollectionView.EmptyView>
         </CollectionView>
 
-        
         <Border Grid.Row="1" 
                 StrokeShape="RoundRectangle 16,16,0,0"
                 StrokeThickness="1"
@@ -131,8 +123,7 @@
                         FontSize="16"
                         BackgroundColor="{StaticResource Primary}"
                         TextColor="White"
-                        Clicked="OnCheckoutClicked"
-                        />
+                        Clicked="OnCheckoutClicked"/>
             </VerticalStackLayout>
         </Border>
     </Grid>
