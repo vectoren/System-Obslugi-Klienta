@@ -11,7 +11,7 @@ namespace Shopper.Services
     {
         private static HttpClient httpClient;
         private static CookieContainer cookieContainer;
-        private static readonly string baseUrl = "http://10.0.0.2:8080/api{0}";
+        private static readonly string baseUrl = "http://10.0.2.2:8080/api{0}";
 
         private static void GetClient()
         {
