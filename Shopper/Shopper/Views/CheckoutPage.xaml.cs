@@ -19,7 +19,7 @@ public partial class CheckoutPage : ContentPage
         if (!IsUserLoggedIn)
         {
             
-            await DisplayAlert("Wymagane logowanie", "Aby sfinalizować zamówienie, musisz być zalogowany.", "Zaloguj się");
+            await DisplayAlertAsync("Wymagane logowanie", "Aby sfinalizować zamówienie, musisz być zalogowany.", "Zaloguj się");
 
             await Shell.Current.GoToAsync("login");
         }
@@ -43,7 +43,7 @@ public partial class CheckoutPage : ContentPage
             string.IsNullOrWhiteSpace(CityEntry.Text) ||
             string.IsNullOrWhiteSpace(PhoneEntry.Text))
         {
-            await DisplayAlert("Błąd", "Proszę uzupełnić wszystkie dane dostawy.", "OK");
+            await DisplayAlertAsync("Błąd", "Proszę uzupełnić wszystkie dane dostawy.", "OK");
             return;
         }
 
@@ -55,7 +55,7 @@ public partial class CheckoutPage : ContentPage
         else if (CodRadio.IsChecked) selectedPayment = "Za pobraniem";
 
         
-        await DisplayAlert("Sukces!", $"Zamówienie zostało złożone.\nWybrana płatność: {selectedPayment}", "OK");
+        await DisplayAlertAsync("Sukces!", $"Zamówienie zostało złożone.\nWybrana płatność: {selectedPayment}", "OK");
 
         
         await Shell.Current.GoToAsync("//list");
