@@ -29,7 +29,7 @@ namespace Shopper.Services
             return;
         }
 
-        public async static Task<(string, bool)> RegisterUser(Account account)
+        public async static Task<(Account?, string, bool)> RegisterUser(Account account)
         {
             try
             {
@@ -43,7 +43,10 @@ namespace Shopper.Services
 
                 if(response.IsSuccessStatusCode)
                 {
-                    return ("Registration successful", true);
+                    var body = await response.Content.ReadAsStringAsync();
+                    var a = JsonSerializer.Deserialize<Account>(body);
+                    a.accountCreationDate = DateTime.Now.ToString("yyyy-MM-dd");
+                    return (a,"Success", true);
                 }
                 else
                 {
@@ -55,7 +58,7 @@ namespace Shopper.Services
             }
             catch(Exception ex) 
             {
-                return (ex.Message, false);
+                return (null,ex.Message, false);
             }
 
         }

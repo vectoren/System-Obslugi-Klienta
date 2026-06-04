@@ -36,16 +36,20 @@ public partial class RegisterAccountPage : ContentPage
             RegisterLoadingOverlay.IsVisible = true;
             await Task.Yield();
 
-            (string, bool) res = await DBRestService.RegisterUser(newAccount);
-            if (res.Item2)
+            (Account?,string, bool) res = await DBRestService.RegisterUser(newAccount);
+            if (res.Item3)
             {
-                await Shell.Current.GoToAsync("list");
+                var ddict = new Dictionary<string, object>
+                {
+                    { "account", res.Item1! }
+                };
+                await Shell.Current.GoToAsync("list", ddict);
             }
             else
             {
-                throw new Exception(string.IsNullOrWhiteSpace(res.Item1)
+                throw new Exception(string.IsNullOrWhiteSpace(res.Item2)
                     ? "Rejestracja nie powiodła się. Spróbuj ponownie."
-                    : res.Item1);
+                    : res.Item2);
             }
         }
         catch (Exception ex)
