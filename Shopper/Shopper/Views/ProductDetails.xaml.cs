@@ -20,4 +20,9 @@ public partial class ProductDetails : ContentPage
             DescriptionLabel.Text = SelectedProduct.Description;
         }
     }
+
+    private void AddToCart(object sender, EventArgs e)
+    {
+
+    }
 }

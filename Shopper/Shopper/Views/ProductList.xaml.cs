@@ -16,6 +16,13 @@ public partial class ProductList : ContentPage
         PobierzDane();
 	}
 
+    private async void onDisappearing(object sender, EventArgs e)
+    {
+        _displayedProducts.Clear();
+        _allProducts.Clear();
+        await DBRestService.Logout(); // Teoretycznie powinien zostac, ale boje sie ze z sesja beda problemy
+    }
+
     private async void PobierzDane()
     {
         try

@@ -61,7 +61,8 @@
             <Button Text="DODAJ DO KOSZYKA"
                     HeightRequest="55"
                     CornerRadius="10"
-                    FontAttributes="Bold" />
+                    FontAttributes="Bold"
+                    Clicked="AddToCart"/>
         </Border>
 
     </Grid>

@@ -28,14 +28,18 @@ public partial class LoginPage : ContentPage
             LoadingOverlay.IsVisible = true;
             await Task.Yield();
 
-            bool res = await DBRestService.Login(_email, _password);
-            if (res)
+            var res = await DBRestService.Login(_email, _password);
+            if (string.IsNullOrEmpty(res.Item2))
             {
-                await Shell.Current.GoToAsync("list");
+                var ddict = new Dictionary<string, object>()
+                {
+                    { "account", res.Item1! }
+                };
+                await Shell.Current.GoToAsync("list", ddict);
             }
             else
             {
-                throw new Exception("Logowanie nie powiodło się. Sprawdź dane i spróbuj ponownie.");
+                throw new Exception(res.Item2);
             }
         }
         catch (Exception ex)

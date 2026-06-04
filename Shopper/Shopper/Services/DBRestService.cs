@@ -29,7 +29,7 @@ namespace Shopper.Services
             return;
         }
 
-        public async static Task<(Account?, string, bool)> RegisterUser(Account account)
+        public async static Task<(string, bool)> RegisterUser(Account account)
         {
             try
             {
@@ -43,10 +43,8 @@ namespace Shopper.Services
 
                 if(response.IsSuccessStatusCode)
                 {
-                    var body = await response.Content.ReadAsStringAsync();
-                    var a = JsonSerializer.Deserialize<Account>(body);
-                    a.accountCreationDate = DateTime.Now.ToString("yyyy-MM-dd");
-                    return (a,"Success", true);
+                    await SecureStorage.Default.SetAsync("currentUser", await response.Content.ReadAsStringAsync());
+                    return ("SUCCESS", true);
                 }
                 else
                 {
@@ -58,12 +56,12 @@ namespace Shopper.Services
             }
             catch(Exception ex) 
             {
-                return (null,ex.Message, false);
+                return (ex.Message, false);
             }
 
         }
 
-        public async static Task<bool> Login(string email, string password)
+        public async static Task<(string,bool)> Login(string email, string password)
         {
             try
             {
@@ -82,14 +80,29 @@ namespace Shopper.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return true;
+                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(await response.Content.ReadAsStringAsync()));
+                    return ("SUCCESS", true);
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
 
             }
             catch (Exception ex)
             {
-                return false;
+                return (ex.Message, false);
+            }
+        }
+
+        public static async Task Logout()
+        {
+            try
+            {
+                SecureStorage.Default.RemoveAll();
+                httpClient = null!;
+                cookieContainer = null!; // Wydaje mi sie ze jest to nie potrzebne, ale na wypadek zostawie
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error during logout: {ex.Message}");
             }
         }
     }
