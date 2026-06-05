@@ -12,8 +12,6 @@ public partial class RegisterAccountPage : ContentPage
 		InitializeComponent();
 	}
 
-    
-
     private async void GoLogin(object sender, EventArgs e)
     {
         if (sender is Button button )
@@ -36,20 +34,16 @@ public partial class RegisterAccountPage : ContentPage
             RegisterLoadingOverlay.IsVisible = true;
             await Task.Yield();
 
-            (Account?,string, bool) res = await DBRestService.RegisterUser(newAccount);
-            if (res.Item3)
+            (string, bool) res = await DBRestService.RegisterUser(newAccount);
+            if (res.Item2)
             {
-                var ddict = new Dictionary<string, object>
-                {
-                    { "account", res.Item1! }
-                };
-                await Shell.Current.GoToAsync("list", ddict);
+                await Shell.Current.GoToAsync("list");
             }
             else
             {
-                throw new Exception(string.IsNullOrWhiteSpace(res.Item2)
+                throw new Exception(string.IsNullOrWhiteSpace(res.Item1)
                     ? "Rejestracja nie powiodła się. Spróbuj ponownie."
-                    : res.Item2);
+                    : res.Item1);
             }
         }
         catch (Exception ex)

@@ -1,5 +1,6 @@
 using Shopper.Models;
 using Shopper.Services;
+using Shopper.UsageClasses;
 using System.Collections.ObjectModel;
 
 namespace Shopper.Views;
@@ -10,9 +11,11 @@ public partial class ProductList : ContentPage
 
     private ObservableCollection<Product> _displayedProducts = [];
     private List<Product> _allProducts = [];
-    public ProductList()
+    private IDataCache _cache;
+    public ProductList(IDataCache cache)
 	{
 		InitializeComponent();
+        _cache = cache;
         PobierzDane();
 	}
 
@@ -51,7 +54,7 @@ public partial class ProductList : ContentPage
         if (sender is Border border && border.BindingContext is Product wybranyProdukt)
         {
        
-            await Navigation.PushAsync(new ProductDetails(wybranyProdukt));
+            await Navigation.PushAsync(new ProductDetails(wybranyProdukt, _cache));
         }
     }
 

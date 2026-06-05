@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Shopper.Cache;
+using Shopper.Models;
+using Shopper.UsageClasses;
 
 namespace Shopper
 {
@@ -18,6 +21,7 @@ namespace Shopper
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<IDataCache, LocalCache>();
 
             return builder.Build();
         }

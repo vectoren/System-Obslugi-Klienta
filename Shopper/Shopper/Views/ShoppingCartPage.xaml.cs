@@ -1,4 +1,5 @@
 using Shopper.Models;
+using Shopper.UsageClasses;
 using System.Collections.ObjectModel;
 
 namespace Shopper.Views;
@@ -7,13 +8,23 @@ public partial class ShoppingCartPage : ContentPage
 {
 
     public ObservableCollection<CartItem> CartItems { get; set; }
-    public ShoppingCartPage()
+    private readonly IDataCache _cache;
+    public ShoppingCartPage(IDataCache cache)
 	{
 		InitializeComponent();
-
         CartItems = new ObservableCollection<CartItem>();
-        CartCollectionView.ItemsSource = CartItems;
+        _cache = cache;
+    }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var cartDetails = _cache.GetAllData();
+        foreach((Product p, int q) in cartDetails)
+        {
+            CartItems.Add(new CartItem { Product = p, Quantity = q});
+        }
+        CartCollectionView.ItemsSource = CartItems;
         UpdateTotalSummary();
     }
 

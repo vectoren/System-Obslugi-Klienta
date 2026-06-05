@@ -1,14 +1,18 @@
+using Shopper.Cache;
 using Shopper.Models;
+using Shopper.UsageClasses;
 
 namespace Shopper.Views;
 
 public partial class ProductDetails : ContentPage
 {
-	public Product SelectedProduct { get; set; }
-	public ProductDetails(Product product)
+    private readonly IDataCache _cartCache;
+    public Product SelectedProduct { get; set; }
+	public ProductDetails(Product product, IDataCache cartCache)
 	{
 		InitializeComponent();
         SelectedProduct = product;
+        _cartCache = cartCache;
         if (SelectedProduct != null)
         {
             
@@ -23,6 +27,6 @@ public partial class ProductDetails : ContentPage
 
     private void AddToCart(object sender, EventArgs e)
     {
-
+        _cartCache.AddData(SelectedProduct);
     }
 }

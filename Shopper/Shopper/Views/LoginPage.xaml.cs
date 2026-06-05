@@ -29,17 +29,13 @@ public partial class LoginPage : ContentPage
             await Task.Yield();
 
             var res = await DBRestService.Login(_email, _password);
-            if (string.IsNullOrEmpty(res.Item2))
+            if (res.Item2)
             {
-                var ddict = new Dictionary<string, object>()
-                {
-                    { "account", res.Item1! }
-                };
-                await Shell.Current.GoToAsync("list", ddict);
+                await Shell.Current.GoToAsync("list");
             }
             else
             {
-                throw new Exception(res.Item2);
+                throw new Exception(res.Item1);
             }
         }
         catch (Exception ex)
