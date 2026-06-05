@@ -20,9 +20,9 @@
                         </Border>
 
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                            <Label Text="Jan Kowalski" FontSize="22" FontAttributes="Bold" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
-                            <Label Text="jan.kowalski@email.com" FontSize="14" TextColor="Gray"/>
-                            <Label Text="Klient od: Maj 2026" FontSize="12" TextColor="Gray" FontAttributes="Italic" Margin="0,5,0,0"/>
+                            <Label Text="{Binding fullName}" FontSize="22" FontAttributes="Bold" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                            <Label Text="{Binding email}" FontSize="14" TextColor="Gray"/>
+                            <Label Text="{Binding accountCreationDate, StringFormat='Klient od: {0}'}" FontSize="12" TextColor="Gray" FontAttributes="Italic" Margin="0,5,0,0"/>
                         </VerticalStackLayout>
                     </Grid>
                 </Border>
@@ -36,14 +36,14 @@
                             <VerticalStackLayout Grid.Column="0" Spacing="5">
                                 <Label Text="Imię" FontSize="12" TextColor="Gray"/>
                                 <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="LightGray" Padding="10,2">
-                                    <Entry Text="Jan" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                    <Entry Text="{Binding firstName}" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="5">
                                 <Label Text="Nazwisko" FontSize="12" TextColor="Gray"/>
                                 <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="LightGray" Padding="10,2">
-                                    <Entry Text="Kowalski" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                    <Entry Text="{Binding lastName}" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
@@ -51,7 +51,7 @@
                         <VerticalStackLayout Grid.Row="1" Spacing="5">
                             <Label Text="Adres E-mail" FontSize="12" TextColor="Gray"/>
                             <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="LightGray" Padding="10,2">
-                                <Entry Text="jan.kowalski@email.com" Keyboard="Email" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                <Entry Text="{Binding email}" Keyboard="Email" TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
                             </Border>
                         </VerticalStackLayout>
 
@@ -69,7 +69,8 @@
                                 BackgroundColor="#512BD4" 
                                 TextColor="White" 
                                 FontAttributes="Bold"
-                                Margin="0,10,0,0"/>
+                                Margin="0,10,0,0"
+                                Clicked="UpdateUserData"/>
                     </Grid>
                 </Border>
 
@@ -84,14 +85,18 @@
                                 BorderWidth="1"
                                 TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                                 CornerRadius="8" 
-                                HeightRequest="45"/>
+                                HeightRequest="45"
+                                Clicked="LogoutUser"
+                                />
 
-                        <Button Text="Dezaktywuj konto" 
+                        <Button Text="Usuń konto" 
                                 BackgroundColor="#FF3B30" 
                                 TextColor="White" 
                                 CornerRadius="8" 
                                 HeightRequest="45"
-                                FontAttributes="Bold"/>
+                                FontAttributes="Bold"
+                                Clicked="DeleteUser"
+                                />
 
                     </VerticalStackLayout>
                 </Border>

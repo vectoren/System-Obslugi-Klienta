@@ -6,7 +6,8 @@ namespace Shopper.Models
 {
     public class Account
     {
-
+        public int userId { get; set; }
+        public string fullName { get => $"{firstName} {lastName}"; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }

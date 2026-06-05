@@ -10,6 +10,11 @@ namespace Shopper
 
             
         }
+        protected override void OnStart()
+        {
+            base.OnStart();
+            SecureStorage.Default.RemoveAll();
+        }
         protected override Window CreateWindow(IActivationState? activationState)
         {
             return new Window(new AppShell());

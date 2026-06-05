@@ -37,7 +37,7 @@ public partial class RegisterAccountPage : ContentPage
             (string, bool) res = await DBRestService.RegisterUser(newAccount);
             if (res.Item2)
             {
-                await Shell.Current.GoToAsync("list");
+                await Shell.Current.GoToAsync("login");
             }
             else
             {

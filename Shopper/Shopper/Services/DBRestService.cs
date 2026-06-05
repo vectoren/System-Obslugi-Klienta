@@ -15,10 +15,10 @@ namespace Shopper.Services
 
         private static void GetClient()
         {
-            if(httpClient is null)
+            if (httpClient is null)
             {
                 cookieContainer = new CookieContainer();
-                var handler = new HttpClientHandler 
+                var handler = new HttpClientHandler
                 {
                     CookieContainer = cookieContainer,
                     UseCookies = true
@@ -41,9 +41,8 @@ namespace Shopper.Services
 
                 var response = await httpClient.PostAsync(uri, content);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    await SecureStorage.Default.SetAsync("currentUser", await response.Content.ReadAsStringAsync());
                     return ("SUCCESS", true);
                 }
                 else
@@ -54,14 +53,14 @@ namespace Shopper.Services
 
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return (ex.Message, false);
             }
 
         }
 
-        public async static Task<(string,bool)> Login(string email, string password)
+        public async static Task<(string, bool)> Login(string email, string password)
         {
             try
             {
@@ -80,10 +79,11 @@ namespace Shopper.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(await response.Content.ReadAsStringAsync()));
+                    var account = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync());
+                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(account));
                     return ("SUCCESS", true);
                 }
-                throw new Exception(await response.Content.ReadAsStringAsync());
+                throw new Exception(await response.Content.ReadAsStringAsync());    
 
             }
             catch (Exception ex)
@@ -91,18 +91,58 @@ namespace Shopper.Services
                 return (ex.Message, false);
             }
         }
-
         public static async Task Logout()
         {
             try
             {
-                SecureStorage.Default.RemoveAll();
                 httpClient = null!;
                 cookieContainer = null!; // Wydaje mi sie ze jest to nie potrzebne, ale na wypadek zostawie
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error during logout: {ex.Message}");
+            }
+        }
+
+        //Dorobic na backendzie
+        public static async Task<(string, bool)> DeleteUser(Account user)
+        {
+            try
+            {
+                GetClient();
+                Uri uri = new Uri(string.Format(baseUrl, $"/{user.userId}/delete"));
+                var response = await httpClient.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    await Logout();
+                    return ("SUCCESS", true);
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                return (ex.Message, false);
+            }
+        }
+        //Dorobic na backendzie
+        public static async Task<(string, bool)> UpdateUser(Account user)
+        {
+            try
+            {
+                GetClient();
+                Uri uri = new Uri(string.Format(baseUrl, $"/{user.userId}/update"));
+                var json = JsonSerializer.Serialize(user);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await httpClient.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return ("SUCCESS", true);
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                return (ex.Message, false);
             }
         }
     }
