@@ -96,7 +96,6 @@ namespace Shopper.Services
             try
             {
                 httpClient = null!;
-                httpClient.Dispose();
                 cookieContainer = null!; // Wydaje mi sie ze jest to nie potrzebne, ale na wypadek zostawie
                 SecureStorage.RemoveAll();
             }

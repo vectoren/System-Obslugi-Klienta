@@ -50,6 +50,7 @@ public partial class ShoppingCartPage : ContentPage
         var item = (CartItem)button.CommandParameter;
 
         item.Quantity++;
+
         UpdateTotalSummary();
     }
 
@@ -65,7 +66,11 @@ public partial class ShoppingCartPage : ContentPage
 
     private async void OnCheckoutClicked(object sender, EventArgs e)
     {
-        //if (CartItems.Count == 0) return;
+        _cache.ClearCache();
+        foreach(CartItem c in CartItems)
+        {
+            _cache.AddData(c.Product, c.Quantity);
+        }
 
         await Shell.Current.GoToAsync("checkout");
     }

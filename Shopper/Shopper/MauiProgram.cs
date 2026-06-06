@@ -2,6 +2,7 @@
 using Shopper.Cache;
 using Shopper.Models;
 using Shopper.UsageClasses;
+using Shopper.Views;
 
 namespace Shopper
 {
