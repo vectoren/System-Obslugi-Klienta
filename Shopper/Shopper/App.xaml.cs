@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Shopper.Services;
 
 namespace Shopper
 {
@@ -6,14 +7,12 @@ namespace Shopper
     {
         public App()
         {
-            InitializeComponent();
-
-            
+            InitializeComponent();            
         }
-        protected override void OnStart()
+        protected async override void OnStart()
         {
             base.OnStart();
-            SecureStorage.Default.RemoveAll();
+            await DBRestService.Logout();
         }
         protected override Window CreateWindow(IActivationState? activationState)
         {

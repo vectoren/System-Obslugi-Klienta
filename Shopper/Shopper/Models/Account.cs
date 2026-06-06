@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Shopper.Models
 {
     public class Account
     {
-        public int userId { get; set; }
+        //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)]
+        public int? userId { get; set; }
+        [JsonIgnore]
         public string fullName { get => $"{firstName} {lastName}"; }
         public string firstName { get; set; }
         public string lastName { get; set; }

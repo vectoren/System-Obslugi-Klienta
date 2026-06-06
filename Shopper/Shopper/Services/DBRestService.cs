@@ -34,7 +34,7 @@ namespace Shopper.Services
             try
             {
                 GetClient();
-
+                account.userId = null;
                 Uri uri = new Uri(string.Format(baseUrl, "/register"));
                 var json = JsonSerializer.Serialize(account);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -96,7 +96,9 @@ namespace Shopper.Services
             try
             {
                 httpClient = null!;
+                httpClient.Dispose();
                 cookieContainer = null!; // Wydaje mi sie ze jest to nie potrzebne, ale na wypadek zostawie
+                SecureStorage.RemoveAll();
             }
             catch (Exception ex)
             {
@@ -105,12 +107,12 @@ namespace Shopper.Services
         }
 
         //Dorobic na backendzie
-        public static async Task<(string, bool)> DeleteUser(Account user)
+        public static async Task<(string, bool)> DeleteUser(int? id)
         {
             try
             {
                 GetClient();
-                Uri uri = new Uri(string.Format(baseUrl, $"/{user.userId}/delete"));
+                Uri uri = new Uri(string.Format(baseUrl, $"/{id}/delete"));
                 var response = await httpClient.DeleteAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -124,18 +126,20 @@ namespace Shopper.Services
                 return (ex.Message, false);
             }
         }
-        //Dorobic na backendzie
-        public static async Task<(string, bool)> UpdateUser(Account user)
+        public static async Task<(string, bool)> UpdateUser(int? id, Account user)
         {
+            //naprawić hasło
             try
             {
                 GetClient();
-                Uri uri = new Uri(string.Format(baseUrl, $"/{user.userId}/update"));
+                Uri uri = new Uri(string.Format(baseUrl, $"/{id}/update"));
                 var json = JsonSerializer.Serialize(user);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PutAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
+                    var account = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync());
+                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(account));
                     return ("SUCCESS", true);
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
