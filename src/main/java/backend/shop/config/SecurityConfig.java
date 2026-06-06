@@ -48,6 +48,7 @@ public class SecurityConfig {
                                                 "firstName", user.getFirstName() != null ? user.getFirstName() : "",
                                                 "lastName", user.getLastName() != null ? user.getLastName() : "",
                                                 "email", user.getEmail(),
+                                                "password", user.getPassword(),
                                                 "role", user.getRole() != null ? user.getRole() : java.util.Collections.emptySet(),
                                                 "accountCreationDate", user.getAccountCreationDate() != null ? user.getAccountCreationDate().toString() : "",
                                                 "deliveryDetails", user.getDeliveryDetails() != null ? user.getDeliveryDetails() : ""
