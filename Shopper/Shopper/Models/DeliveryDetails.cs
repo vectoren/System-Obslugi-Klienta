@@ -7,30 +7,26 @@ namespace Shopper.Models
 {
     public class DeliveryDetails
     {
-        public int DeliveryDetailsId { get; set; }
-        public string Region { get; set; }     // Woj
-        public string City { get; set; }       // miasto
-        public string Street { get; set; }     // ulica
-        public string TownCode { get; set; }   // kod pocztowy
-        public string HomeNumber { get; set; } // nr domu
+        public string region { get; set; }
+        public string city { get; set; }
+        public string street { get; set; }
+        public string townCode { get; set; }
+        public string homeNumber { get; set; }
+        public string deliveredDate { get; set; }
+        public double deliveryCost { get; set; } = 14.99;
+        public Account userId { get; set; }
+        public Orders orderId { get; set; }
 
-        // W C# używamy DateTime zamiast java.util.Date
-        public DateTime DeliveredDate { get; set; }
-
-        public double DeliveryCost { get; set; }
-
-        // --- RELACJE JEDEN-DO-JEDNEGO (OneToOne) ---
-
-        // Klucz obcy dla użytkownika
-        public int UserId { get; set; }
-
-        [ForeignKey(nameof(UserId))]
-        public virtual Users User { get; set; }
-
-        // Klucz obcy dla zamówienia
-        public int OrderId { get; set; }
-
-        [ForeignKey(nameof(OrderId))]
-        public virtual Orders Order { get; set; }
+        public DeliveryDetails(string region, string city, string street, string townCode, string homeNumber, Account userId, Orders order)
+        {
+            this.region = region;
+            this.city = city;
+            this.street = street;
+            this.townCode = townCode;
+            this.homeNumber = homeNumber;
+            this.userId = userId;
+            this.orderId = order;
+            deliveredDate = (DateTime.Now + TimeSpan.FromDays(7)).ToString("yyyy-MM-dd");
+        }
     }
 }

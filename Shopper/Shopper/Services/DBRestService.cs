@@ -9,7 +9,7 @@ namespace Shopper.Services
 {
     public static class DBRestService
     {
-        private static HttpClient httpClient;
+        public static HttpClient httpClient;
         private static CookieContainer cookieContainer;
         private static readonly string baseUrl = "http://10.0.2.2:8080/api{0}";
 
