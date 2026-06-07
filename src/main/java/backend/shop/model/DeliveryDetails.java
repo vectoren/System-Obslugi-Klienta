@@ -3,11 +3,11 @@ package backend.shop.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -20,7 +20,7 @@ public class DeliveryDetails{
     private String street;//ulica
     private String townCode;//kod pocztowy
     private String homeNumber;//nr domu
-    private Date deliveredDate;
+    private LocalDate deliveredDate;
     private double deliveryCost;
 
     @OneToOne(fetch = FetchType.LAZY)

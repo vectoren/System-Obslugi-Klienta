@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.apache.logging.log4j.util.Lazy;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -16,7 +17,7 @@ public class PaymentDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentDetailsId;
-    private Date paymentAccomplishedDate;
+    private LocalDate paymentAccomplishedDate;
     private String paymentType;
     private boolean isPaid;
 

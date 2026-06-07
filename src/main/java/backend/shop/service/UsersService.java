@@ -61,4 +61,31 @@ public class UsersService {
             return Optional.empty();
         }
     }
+
+    public Optional<String> resetPassword(int id){
+        try{
+            Optional<Users> user = this.repo.findById(id);
+            String newPassword = generateNewPassword();
+            if(user.isPresent()){
+                var realUser = user.get();
+                realUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+                this.repo.save(realUser);
+            }
+            return Optional.of(newPassword);
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    private String generateNewPassword(){
+        StringBuilder sb = new StringBuilder();
+        char randomAscii;
+        for(int i = 0; i < 10; i++){
+            randomAscii = (char)((int)(Math.random() * 127));
+            sb.append(randomAscii);
+        }
+        return sb.toString();
+    }
 }

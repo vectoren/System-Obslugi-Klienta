@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class Orders{
     private Integer orderId;
     private String products;
     private BigDecimal wholeCost;
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @OneToOne(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PaymentDetails paymentDetails;
