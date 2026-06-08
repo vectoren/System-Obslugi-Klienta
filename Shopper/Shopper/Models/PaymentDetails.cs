@@ -9,14 +9,14 @@ namespace Shopper.Models
         public String paymentAccomplishedDate { get; set; }
         public string paymentType { get; set; }
         public bool isPaid { get; set; }
-        public Orders order { get; set; }
+        public Orders orderId { get; set; }
 
         public PaymentDetails(string paymentType, String paymentDate, Orders order)
         {
             this.paymentType = paymentType;
             this.paymentAccomplishedDate = paymentDate;
             this.isPaid = true; // Assuming payment is successful for simplicity
-            this.order = order;
+            this.orderId = order;
         }
     }
 }
