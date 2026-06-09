@@ -1,5 +1,6 @@
 package backend.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.logging.log4j.util.Lazy;
@@ -20,6 +21,7 @@ public class PaymentDetails{
     private LocalDate paymentAccomplishedDate;
     private String paymentType;
     private boolean isPaid;
+
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")

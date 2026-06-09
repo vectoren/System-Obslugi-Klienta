@@ -1,5 +1,7 @@
 package backend.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +24,8 @@ public class Orders{
 
     @OneToOne(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PaymentDetails paymentDetails;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @OneToOne(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DeliveryDetails deliveryDetails;
 
