@@ -66,7 +66,11 @@ public partial class ShoppingCartPage : ContentPage
 
     private async void OnCheckoutClicked(object sender, EventArgs e)
     {
-        _cache.ClearCache();
+        if (CartItems.Count == 0)
+        {
+            await DisplayAlertAsync("ERROR", "Nie masz żadnych produktów w koszyku.", "OK");
+            return;
+        }
         foreach(CartItem c in CartItems)
         {
             _cache.AddData(c.Product, c.Quantity);

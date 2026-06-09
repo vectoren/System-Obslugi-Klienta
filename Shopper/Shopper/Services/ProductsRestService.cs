@@ -10,19 +10,20 @@ namespace Shopper.Services
     {
         private static HttpClient httpClient = DBRestService.httpClient;
         private static readonly string baseUrl = "http://10.0.2.2:8080/api/{0}";
+        private static readonly JsonSerializerOptions jsonOptions = DBRestService.jsonOptions;
 
         public static async Task<int> AddNewOrder(Orders order)
         {
             try
             {
                 Uri uri = new Uri(string.Format(baseUrl, "orders"));
-                var json = JsonSerializer.Serialize(order);
+                var json = JsonSerializer.Serialize(order, jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var orderId = JsonSerializer.Deserialize<int>(jsonResponse);
+                    var orderId = JsonSerializer.Deserialize<int>(jsonResponse, jsonOptions);
                     return orderId;
                 }
                 else
@@ -43,7 +44,7 @@ namespace Shopper.Services
             try
             {
                 Uri uri = new Uri(string.Format(baseUrl, "delivery-details"));
-                var json = JsonSerializer.Serialize(dd);
+                var json = JsonSerializer.Serialize(dd, jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(uri, content);
                 if (response.IsSuccessStatusCode)
@@ -65,7 +66,7 @@ namespace Shopper.Services
             try
             {
                 Uri uri = new Uri(string.Format(baseUrl, "payment-details"));
-                var json = JsonSerializer.Serialize(pd);
+                var json = JsonSerializer.Serialize(pd, jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(uri, content);
                 if (response.IsSuccessStatusCode)

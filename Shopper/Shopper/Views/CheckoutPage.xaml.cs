@@ -20,26 +20,28 @@ public partial class CheckoutPage : ContentPage
     {
         base.OnAppearing();
 
+
         if (await SecureStorage.GetAsync("currentUser") is null)
         {
 
             await DisplayAlertAsync("Wymagane logowanie", "Aby sfinalizować zamówienie, musisz być zalogowany.", "Zaloguj się");
 
             await Shell.Current.GoToAsync("login");
+            return;
         }
-        else
+        acc = await GetCurrentUser();
+
+        FullNameEntry.Text = acc.fullName;
+
+        if (acc.RawDeliveryDetails is not null)
         {
-            acc = await GetCurrentUser();
-            FullNameEntry.Text = acc.fullName;
-            /*        StreetEntry.Text;
-                    PostalCodeEntry.Text
-                    CityEntry.Text
-                    PhoneEntry.Text*/
-
-            
+            StreetEntry.Text = $"{acc.deliveryDetails.street} {acc.deliveryDetails.homeNumber}";
+            PostalCodeEntry.Text = acc.deliveryDetails.townCode;
+            CityEntry.Text = acc.deliveryDetails.city;
+            //PhoneEntry.Text = acc.phone;
         }
-        CalculateSummary();
 
+        CalculateSummary();
     }
 
     private void CalculateSummary()
@@ -117,8 +119,12 @@ public partial class CheckoutPage : ContentPage
 
         if(paymentSuccess && success)
         {
-            _cache.ClearCache();
             await DisplayAlertAsync("SUCCESS", $"Zamówienie zostało złożone.\nWybrana płatność: {selectedPayment}! \nProsimy o cierpliwość w oczekiwaniu na paczkę.", "OK");
+        }
+
+        if(acc.deliveryDetails is not null)
+        {
+            await DisplayActionSheetAsync("Warning", "asdf", "aasdfasdfaf", new string[] {"tak, nie, nie wiem"});
         }
 
 

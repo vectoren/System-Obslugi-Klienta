@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Shopper.Models
 {
     public class DeliveryDetails
     {
+        public int? deliveryDetailsId { get; set; }
         public string region { get; set; }
         public string city { get; set; }
         public string street { get; set; }
@@ -16,6 +18,9 @@ namespace Shopper.Models
         public double deliveryCost { get; set; } = 14.99;
         public Account userId { get; set; }
         public Orders orderId { get; set; }
+
+        [JsonConstructor]
+        public DeliveryDetails() { }
 
         public DeliveryDetails(string region, string city, string street, string townCode, string homeNumber, Account userId, Orders order)
         {

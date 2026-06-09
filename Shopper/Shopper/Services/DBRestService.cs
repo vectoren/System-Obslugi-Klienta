@@ -12,6 +12,10 @@ namespace Shopper.Services
         public static HttpClient httpClient;
         private static CookieContainer cookieContainer;
         private static readonly string baseUrl = "http://10.0.2.2:8080/api{0}";
+        public static readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
 
         private static void GetClient()
         {
@@ -21,8 +25,9 @@ namespace Shopper.Services
                 var handler = new HttpClientHandler
                 {
                     CookieContainer = cookieContainer,
-                    UseCookies = true
+                    UseCookies = true,
                 };
+                
                 httpClient = new HttpClient(handler);
 
             }
@@ -36,7 +41,7 @@ namespace Shopper.Services
                 GetClient();
                 account.userId = null;
                 Uri uri = new Uri(string.Format(baseUrl, "/register"));
-                var json = JsonSerializer.Serialize(account);
+                var json = JsonSerializer.Serialize(account, jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await httpClient.PostAsync(uri, content);
@@ -79,8 +84,8 @@ namespace Shopper.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var account = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync());
-                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(account));
+                    var account = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(account, jsonOptions));
                     return ("SUCCESS", true);
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());    
@@ -132,13 +137,13 @@ namespace Shopper.Services
             {
                 GetClient();
                 Uri uri = new Uri(string.Format(baseUrl, $"/{id}/update"));
-                var json = JsonSerializer.Serialize(user);
+                var json = JsonSerializer.Serialize(user, jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PutAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
-                    var account = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync());
-                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(account));
+                    var account = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    await SecureStorage.Default.SetAsync("currentUser", JsonSerializer.Serialize(account, jsonOptions));
                     return ("SUCCESS", true);
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
