@@ -12,20 +12,19 @@
     <Page.DataContext>
         <vm:ActiveAdminsVM/>
     </Page.DataContext>
-
-    <StackPanel Margin="8">
-        <TextBlock Text="Active Admins"
+    <Grid RowDefinitions="auto,*,*">
+        <TextBlock Text="Dostępni Admini"
                    FontSize="24"
                    FontWeight="SemiBold"
                    Foreground="#272343"
-                   TextWrapping="Wrap"/>
+                   TextWrapping="Wrap"
+                   Grid.Row="0"/>
         <ListView ItemsSource="{Binding Accounts}"
-                  IsEnabled="False"
                   BorderThickness="0"
                   Margin="0"
                   Padding="0"
                   HorizontalAlignment="Stretch"
-                  HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                  HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -58,6 +57,6 @@
             </ListView.ItemTemplate>
 
         </ListView>
-        
-    </StackPanel>
+        <local:ChatUC Grid.Row="2"/>
+    </Grid>
 </Page>

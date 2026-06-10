@@ -51,7 +51,7 @@
                 VerticalAlignment="Stretch"
                 >
                 <StackPanel Margin="8" DataContext="{Binding SelectedIssue}" VerticalAlignment="Stretch">
-                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding IssueId, StringFormat='Zgłoszenie nr: {0}', FallbackValue='(Nie wybrano zgłoszenia)'}" Foreground="#272343"/>
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding Id, StringFormat='Zgłoszenie nr: {0}', FallbackValue='(Nie wybrano zgłoszenia)'}" Foreground="#272343"/>
                     <TextBlock FontWeight="SemiBold" Text="{Binding IssuedOn, StringFormat='Data zgłoszenia: {0:dd.MM.yyyy}'}" Foreground="#2d334a"/>
                     <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding OrderId, StringFormat='Dotyczy zamówienia nr {0}'}"/>
                     <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding IssueStatus, StringFormat='Status zgłoszenia: {0}'}"/>

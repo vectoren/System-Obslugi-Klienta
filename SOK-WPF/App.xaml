@@ -8,6 +8,7 @@
 
         <Style TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="MinHeight" Value="32"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
