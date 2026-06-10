@@ -153,5 +153,10 @@ namespace Shopper.Services
                 return (ex.Message, false);
             }
         }
+
+        public static Task<string> RestartPassword()
+        {
+            return Task.FromResult("Not implemented yet");
+        }
     }
 }

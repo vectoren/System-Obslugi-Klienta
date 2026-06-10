@@ -95,6 +95,7 @@ public partial class ProductList : ContentPage
 
     private async void OnCartIconClicked(object sender, EventArgs e)
     {
+        _cache.SetProducts(_displayedProducts.ToList());
         if (sender is Button button)
         {
             await Shell.Current.GoToAsync("/shopping-cart");

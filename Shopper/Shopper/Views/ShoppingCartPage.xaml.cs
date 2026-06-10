@@ -19,11 +19,12 @@ public partial class ShoppingCartPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        var cartDetails = _cache.GetAllData();
-        foreach((Product p, int q) in cartDetails)
+        CartItems.Clear();
+        foreach((int id, int cnt) in _cache.GetAllData())
         {
-            CartItems.Add(new CartItem { Product = p, Quantity = q});
+            CartItems.Add(new CartItem { Product = _cache.GetProducts().First(p => p.Id == id), Quantity = cnt });
         }
+
         CartCollectionView.ItemsSource = CartItems;
         UpdateTotalSummary();
     }
@@ -33,14 +34,11 @@ public partial class ShoppingCartPage : ContentPage
         var button = (Button)sender;
         var item = (CartItem)button.CommandParameter;
 
-        if (item.Quantity > 1)
-        {
-            item.Quantity--;
-        }
-        else
-        {
-            CartItems.Remove(item);
-        }
+        if (item.Quantity > 1) item.Quantity--;
+        else CartItems.Remove(item);
+
+        _cache.SubtractElement(item.Product.Id);
+
         UpdateTotalSummary();
     }
 
@@ -48,8 +46,9 @@ public partial class ShoppingCartPage : ContentPage
     {
         var button = (Button)sender;
         var item = (CartItem)button.CommandParameter;
-
         item.Quantity++;
+        _cache.AddData(item.Product.Id);
+
 
         UpdateTotalSummary();
     }
@@ -57,9 +56,9 @@ public partial class ShoppingCartPage : ContentPage
     private void UpdateTotalSummary()
     {
         decimal total = 0;
-        foreach (var item in CartItems)
+        foreach (CartItem item in CartItems)
         {
-            total += item.TotalPrice;
+            total += decimal.Parse(item.Product.Price.ToString()) * item.Quantity;
         }
         CartTotalLabel.Text = $"{total:F2} zł";
     }
@@ -71,10 +70,7 @@ public partial class ShoppingCartPage : ContentPage
             await DisplayAlertAsync("ERROR", "Nie masz żadnych produktów w koszyku.", "OK");
             return;
         }
-        foreach(CartItem c in CartItems)
-        {
-            _cache.AddData(c.Product, c.Quantity);
-        }
+
 
         await Shell.Current.GoToAsync("checkout");
     }

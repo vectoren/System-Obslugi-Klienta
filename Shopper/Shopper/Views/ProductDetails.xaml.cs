@@ -25,8 +25,6 @@ public partial class ProductDetails : ContentPage
         }
     }
 
-    private void AddToCart(object sender, EventArgs e)
-    {
-        _cartCache.AddData(SelectedProduct);
-    }
+    private void AddToCart(object sender, EventArgs e) => _cartCache.AddData(SelectedProduct.Id);
+
 }

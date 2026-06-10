@@ -1,4 +1,5 @@
-﻿using Shopper.Models;
+﻿
+using Shopper.Models;
 using Shopper.UsageClasses;
 using System;
 using System.Collections.Generic;
@@ -8,39 +9,36 @@ namespace Shopper.Cache
 {
     public class LocalCache : IDataCache
     {
-        private readonly Dictionary<Product, int> _cache = new Dictionary<Product, int>();
+        private readonly Dictionary<int, int> _cache = new Dictionary<int, int>(); //produkt id, count
+        private readonly List<Product> products = new List<Product>();
 
-        public void AddData(Product key, int value = 1)
+        public void AddData(int key, int value = 1)
         {
-            if( _cache.ContainsKey(key))
+            if(_cache.ContainsKey(key))
             {
-                _cache[key] = _cache[key] + 1;
+                _cache[key] += value;
             }
             else
             {
-                _cache.Add(key, value);
+                _cache[key] = value;
             }
         }
 
-        public void ClearCache()
+        public void ClearCache() => _cache.Clear();
+
+        public void SubtractElement(int key)
         {
-            _cache.Clear();
+            if (_cache[key] > 1) _cache[key]--;
+            else _cache.Remove(key);
         }
 
-        public void DeleteData(Product key)
-        {
-            _cache.Remove(key);
-        }
+        public Dictionary<int, int> GetAllData() => _cache;
 
-        public Dictionary<Product, int> GetAllData()
-        {
-            return _cache;
-        }
+        public int GetData(int key) => _cache.TryGetValue(key, out int value) ? value : 0;
 
-        public (Product, int) GetData(Product key)
-        {
-            return _cache.TryGetValue(key, out int value) ? (key, value) : default;
-        }
+        public void SetProducts(List<Product> products) => this.products.AddRange(products);
 
+
+        public List<Product> GetProducts() => products;
     }
 }

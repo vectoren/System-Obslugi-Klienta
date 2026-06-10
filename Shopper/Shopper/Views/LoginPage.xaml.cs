@@ -47,4 +47,9 @@ public partial class LoginPage : ContentPage
             LoadingOverlay.IsVisible = false;
         }
     }
+
+    private async void ForgotPassword(object sender, EventArgs e)
+    {
+        
+    }
 }

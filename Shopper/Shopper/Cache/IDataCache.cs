@@ -7,10 +7,12 @@ namespace Shopper.UsageClasses
 {
     public interface IDataCache
     {
-        void AddData(Product key, int value = 1);
-        void DeleteData(Product key);
+        void AddData(int key, int value = 1);
+        void SubtractElement(int id);
         void ClearCache();
-        (Product, int) GetData(Product key);
-        Dictionary<Product, int> GetAllData();
+        int GetData(int key);
+        Dictionary<int, int> GetAllData();
+        void SetProducts(List<Product> products);
+        List<Product> GetProducts();
     }
 }

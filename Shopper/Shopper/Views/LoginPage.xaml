@@ -56,7 +56,8 @@
                         Background="Transparent"
                         TextColor="#512BD4"
                         HorizontalOptions="End"
-                        Padding="0"/>
+                        Padding="0"
+                        Clicked="ForgotPassword"/>
 
                 <Button Grid.Row="4" 
                         Text="Zaloguj się" 
