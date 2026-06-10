@@ -19,15 +19,13 @@
                    FontWeight="SemiBold"
                    Foreground="#272343"
                    TextWrapping="Wrap"/>
-
-
-        <ListView ItemsSource="{Binding Admins}"
+        <ListView ItemsSource="{Binding Accounts}"
                   IsEnabled="False"
                   BorderThickness="0"
                   Margin="0"
                   Padding="0"
                   HorizontalAlignment="Stretch"
-                  HorizontalContentAlignment="Stretch">
+                  HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -38,21 +36,21 @@
                         <StackPanel>
 
                             <DockPanel LastChildFill="False">
-                                <TextBlock Text="{Binding Name}"
+                                <TextBlock Text="{Binding fullName}"
                                            FontWeight="SemiBold"
                                            Foreground="#fffffe"
                                            DockPanel.Dock="Left"/>
                                 <Border DockPanel.Dock="Right" 
                                            Background="#bae8e8"
                                            CornerRadius="3">
-                                    <TextBlock Text="{Binding Role}"
+                                    <TextBlock Text="Admin"
                                            FontSize="10"
                                            FontWeight="SemiBold"
                                            Foreground="#272343"
                                            Padding="4,2"/>
                                 </Border>
                             </DockPanel>
-                            <TextBlock Text="{Binding Email}"
+                            <TextBlock Text="{Binding email}"
                                        Foreground="#e3f6f5"/>
                         </StackPanel>
                     </Border>
@@ -60,7 +58,6 @@
             </ListView.ItemTemplate>
 
         </ListView>
-
-
+        
     </StackPanel>
 </Page>

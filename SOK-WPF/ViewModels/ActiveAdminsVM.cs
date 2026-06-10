@@ -14,7 +14,7 @@ namespace SOK_WPF.ViewModels
 
         public ActiveAdminsVM()
         {
-
+            LoadActiveAdmins();
         }
 
         public async void LoadActiveAdmins()

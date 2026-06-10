@@ -92,9 +92,14 @@ namespace SOK_WPF.Services
             {
                 return new List<Account>()
                 {
-                    new Account { userId = 1, firstName = "Jan", lastName = "", email = "jan@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 2, firstName = "Anna", lastName = "", email = "anna@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 3, firstName = "Piotr", lastName = "", email = "piotr@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") }
+                    new Account { userId = 1, firstName = "Jan", lastName = "Kowalski", email = "jan@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 2, firstName = "Anna", lastName = "Nowak", email = "anna@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 3, firstName = "Piotr", lastName = "Zieliński", email = "piotr@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 4, firstName = "Maria", lastName = "Wójcik", email = "maria@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 5, firstName = "Krzysztof", lastName = "Wiśniewski", email = "krzysztof@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 6, firstName = "Agnieszka", lastName = "Kaczmarek", email = "agnieszka@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 7, firstName = "Tomasz", lastName = "Mazur", email = "tomasz@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 8, firstName = "Ewa", lastName = "Michalska", email = "ewa@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") }
                 };
             }
         }
