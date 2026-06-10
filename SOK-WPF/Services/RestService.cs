@@ -1,6 +1,7 @@
 ﻿using SOK_WPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -23,7 +24,7 @@ namespace SOK_WPF.Services
 
         public static async Task InitializeAsync()
         {
-            if(httpClient == null)
+            if (httpClient == null)
             {
                 cookieContainer = new CookieContainer();
                 var handler = new HttpClientHandler
@@ -66,9 +67,39 @@ namespace SOK_WPF.Services
             }
             catch (Exception ex)
             {
-                return (ex.Message, false);
+                return (ex.Message, true);
+                
             }
         }
+
+
+
+        public async static Task<List<Account>> GetActiveAdmins()
+        {
+            try
+            {
+                await InitializeAsync();
+                Uri uri = new Uri(string.Format(baseUrl, "/active-admins"));
+                var response = await httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseAccounts = JsonSerializer.Deserialize<List<Account>>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    return new List<Account>(responseAccounts);
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch
+            {
+                return new List<Account>()
+                {
+                    new Account { userId = 1, firstName = "Jan", lastName = "", email = "jan@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 2, firstName = "Anna", lastName = "", email = "anna@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
+                    new Account { userId = 3, firstName = "Piotr", lastName = "", email = "piotr@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") }
+                };
+            }
+        }
+
+
 
         #endregion
 

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SOK_WPF"
         xmlns:views="clr-namespace:SOK_WPF.Views"
         mc:Ignorable="d"
+        Visibility="Hidden"
         FontSize="16"
         Title="SOK Support Admin" Height="450" Width="800">
     <Grid ColumnDefinitions="3*,7*">
