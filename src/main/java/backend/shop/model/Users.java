@@ -120,7 +120,7 @@ public class Users{
     @CreationTimestamp
     private LocalDate accountCreationDate;
 
-    @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "userId", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private DeliveryDetails deliveryDetails;
 
     @Override
