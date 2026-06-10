@@ -1,0 +1,76 @@
+﻿using SOK_WPF.Models;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Security.Principal;
+using System.Text;
+using System.Text.Json;
+
+namespace SOK_WPF.Services
+{
+    public static class RestService
+    {
+        public static HttpClient httpClient;
+        private static CookieContainer cookieContainer;
+        public static Account? account;
+        private static readonly string baseUrl = "http://localhost:8080/api{0}";
+        public static readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+
+        public static async Task InitializeAsync()
+        {
+            if(httpClient == null)
+            {
+                cookieContainer = new CookieContainer();
+                var handler = new HttpClientHandler
+                {
+                    CookieContainer = cookieContainer,
+                    UseCookies = true,
+                };
+
+                httpClient = new HttpClient(handler);
+            }
+        }
+
+        #region HTTP Methods
+
+        public async static Task<(string, bool)> Login(string email, string password)
+        {
+            try
+            {
+                await InitializeAsync();
+                Uri uri = new Uri(string.Format(baseUrl, "/login"));
+
+                var keyValuePairs = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("username",email),
+                    new KeyValuePair<string, string>("password", password)
+                };
+
+                var content = new FormUrlEncodedContent(keyValuePairs);
+
+                var response = await httpClient.PostAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseAccount = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    account = responseAccount;
+                    return ("SUCCESS", true);
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception ex)
+            {
+                return (ex.Message, false);
+            }
+        }
+
+        #endregion
+
+    }
+}
