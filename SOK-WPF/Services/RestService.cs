@@ -68,7 +68,7 @@ namespace SOK_WPF.Services
             catch (Exception ex)
             {
                 return (ex.Message, true);
-                
+
             }
         }
 
@@ -103,6 +103,34 @@ namespace SOK_WPF.Services
                 };
             }
         }
+
+
+        public async static Task<List<Dictionary<string, string>>> GetChatHistory(Account? Acc)
+        {
+
+            if (Acc != null)
+            {
+                return new()
+                {
+                    new(){
+                        { "user", $"{Acc.fullName}"} ,
+                        { "content", "Cześć, masz już gotowy ten projekt?"} ,
+                        { "user1", "Tak, jeśli o to chodzi..."}
+                    },
+                    new(){
+                        { "user", "Current User"} ,
+                        { "content", "Tak, jeśli o to chodzi..."} ,
+                    },
+                    new(){
+                        { "user", $"{Acc.fullName}"} ,
+                        { "content", "Nevermind, wszystko rozumiem..."}
+                    }
+                };
+            }
+            else
+                return new();
+        }
+
 
 
 

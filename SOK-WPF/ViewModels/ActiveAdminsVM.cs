@@ -12,14 +12,19 @@ namespace SOK_WPF.ViewModels
         [ObservableProperty]
         List<Account>? accounts;
 
+        [ObservableProperty]
+        public ChatUCVM chatUCVM;
+        
         public ActiveAdminsVM()
         {
             LoadActiveAdmins();
+            ChatUCVM = new();
         }
 
         public async void LoadActiveAdmins()
         {
             Accounts = await RestService.GetActiveAdmins();
         }
+        
     }
 }
