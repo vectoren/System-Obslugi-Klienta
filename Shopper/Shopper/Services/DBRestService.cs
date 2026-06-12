@@ -154,9 +154,9 @@ namespace Shopper.Services
             }
         }
 
-        public static Task<string> RestartPassword()
+        public static async Task<(string, bool)> RestartPassword(string email)
         {
-            return Task.FromResult("Not implemented yet");
+            return ("Nie można zresetować hasła. Prosimy spróbować ponownie później.", false);
         }
     }
 }

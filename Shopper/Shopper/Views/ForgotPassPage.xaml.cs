@@ -1,3 +1,4 @@
+using Shopper.Services;
 using System.Text.RegularExpressions;
 
 namespace Shopper.Views;
@@ -11,27 +12,27 @@ public partial class ForgotPassPage : ContentPage
 
     private async void OnSendResetLinkClicked(object sender, EventArgs e)
     {
-        string email = EmailEntry.Text?.Trim();
-
-       
-        if (string.IsNullOrWhiteSpace(email))
+        if (string.IsNullOrWhiteSpace(EmailEntry.Text))
         {
-            await DisplayAlert("Błąd", "Wprowadź swój adres e-mail.", "OK");
+            await DisplayAlertAsync("Błąd", "Wprowadź swój adres e-mail.", "OK");
             return;
         }
+        string email = EmailEntry.Text.Trim();
 
         var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         if (!Regex.IsMatch(email, emailRegex))
         {
-            await DisplayAlert("Błąd", "Wprowadzony adres e-mail jest niepoprawny.", "OK");
+            await DisplayAlertAsync("Błąd", "Wprowadzony adres e-mail jest niepoprawny.", "OK");
+            return;
+        }
+        var (message, success) = await DBRestService.RestartPassword(email);
+        if (!success)
+        {
+            await DisplayAlertAsync("Błąd", message, "OK");
             return;
         }
 
-        
-        SuccessMessageLabel.Text = $"Wysłaliśmy instrukcje resetowania hasła na adres: {email}. Sprawdź swoją skrzynkę pocztową (oraz folder Spam).";
-        EmailFormState.IsVisible = false;
-        BackToLoginLink.IsVisible = false;
-        SuccessState.IsVisible = true;
+
     }
 
     private async void OnBackToLoginClicked(object sender, EventArgs e)
