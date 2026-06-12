@@ -12,6 +12,7 @@ namespace Shopper
             Routing.RegisterRoute("list", typeof(ProductList));
             Routing.RegisterRoute("shopping-cart", typeof(ShoppingCartPage));
             Routing.RegisterRoute("checkout", typeof(CheckoutPage));
+            Routing.RegisterRoute("forgot-password", typeof(ForgotPassPage));
         }
     }
 }

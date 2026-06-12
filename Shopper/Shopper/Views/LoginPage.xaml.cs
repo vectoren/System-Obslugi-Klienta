@@ -50,6 +50,6 @@ public partial class LoginPage : ContentPage
 
     private async void ForgotPassword(object sender, EventArgs e)
     {
-        
+        await Shell.Current.GoToAsync("forgot-password");
     }
 }
