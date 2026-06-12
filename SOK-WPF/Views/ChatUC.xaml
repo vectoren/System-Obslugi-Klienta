@@ -16,7 +16,6 @@
     </UserControl.Resources>
     <Grid>
 
-        <Image Source="/Assets/gg.jpg"/>
         <Grid RowDefinitions="3*,*"  Background="#272343">
             <ListView Grid.Row="0" ItemsSource="{Binding ChatHistory}" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0">
                 <ListView.ItemContainerStyle>
