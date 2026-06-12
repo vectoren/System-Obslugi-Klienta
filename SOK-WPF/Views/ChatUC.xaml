@@ -17,8 +17,8 @@
     <Grid>
 
         <Image Source="/Assets/gg.jpg"/>
-        <Grid RowDefinitions="3*,*">
-            <ListView Grid.Row="0" ItemsSource="{Binding ChatHistory}" Background="#272343">
+        <Grid RowDefinitions="3*,*"  Background="#272343">
+            <ListView Grid.Row="0" ItemsSource="{Binding ChatHistory}" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -32,7 +32,7 @@
                         <Border Background="#fffffe" CornerRadius="18">
                             <Grid x:Name="griddy" ColumnDefinitions="auto,*,auto" Margin="0,4">
                                 <Border x:Name="AvatarBorder" Background="#ffd803" Width="32" Height="32" Margin="8,0" CornerRadius="30" Grid.Column="0">
-                                    <TextBlock Text="{Binding [user], Converter={StaticResource IConvert}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontWeight="DemiBold"/>
+                                    <TextBlock Text="{Binding [fullName], Converter={StaticResource IConvert}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontWeight="DemiBold"/>
                                 </Border>
                                 <TextBlock x:Name="ContentTb" Text="{Binding [content]}" VerticalAlignment="Center" Grid.Column="1"/>
                             </Grid>
@@ -44,7 +44,7 @@
                                         <Condition.Binding>
                                             <MultiBinding Converter="{StaticResource NBConvert}">
                                                 <MultiBinding.Bindings>
-                                                    <Binding Path="[user]"/>
+                                                    <Binding Path="[fullName]"/>
                                                     <Binding Path="DataContext.Acc.fullName" RelativeSource="{RelativeSource AncestorType={x:Type ListView}}"/>
                                                 </MultiBinding.Bindings>
                                             </MultiBinding>
@@ -64,8 +64,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid Grid.Row="1" Grid.ColumnDefinitions="*,Auto" Margin="12">
-                <TextBox Margin="0,0,8,0" HorizontalAlignment="Stretch" Padding="4" TextWrapping="Wrap"/>
-                <Button Content="Wyślij" Width="80" Grid.Column="1"/>
+                <TextBox Margin="0,0,8,0" HorizontalAlignment="Stretch" Padding="4" TextWrapping="Wrap" Text="{Binding Text}"/>
+                <Button Content="Wyślij" Width="80" Grid.Column="1" Command="{Binding SendTextCommand}"/>
             </Grid>
         </Grid>
     </Grid>

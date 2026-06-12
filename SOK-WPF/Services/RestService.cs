@@ -67,14 +67,24 @@ namespace SOK_WPF.Services
             }
             catch (Exception ex)
             {
+#if DEBUG
+                account = new()
+                {
+                    userId = 0,
+                    firstName = "Current",
+                    lastName = "User",
+
+                };
+#endif
                 return (ex.Message, true);
+
 
             }
         }
 
 
 
-        public async static Task<List<Account>> GetActiveAdmins()
+        public async static Task<ObservableCollection<Account>> GetActiveAdmins()
         {
             try
             {
@@ -83,14 +93,14 @@ namespace SOK_WPF.Services
                 var response = await httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseAccounts = JsonSerializer.Deserialize<List<Account>>(await response.Content.ReadAsStringAsync(), jsonOptions);
-                    return new List<Account>(responseAccounts);
+                    var responseAccounts = JsonSerializer.Deserialize<ObservableCollection<Account>>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    return responseAccounts;
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
             }
             catch
             {
-                return new List<Account>()
+                return new ObservableCollection<Account>()
                 {
                     new Account { userId = 1, firstName = "Jan", lastName = "Kowalski", email = "jan@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
                     new Account { userId = 2, firstName = "Anna", lastName = "Nowak", email = "anna@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
@@ -105,32 +115,61 @@ namespace SOK_WPF.Services
         }
 
 
-        public async static Task<List<Dictionary<string, string>>> GetChatHistory(Account? Acc)
+        public async static Task<ObservableCollection<Dictionary<string, string>>> GetChatHistory(Account? Acc)
         {
+
+            /*
+             Zamysł jest taki, że prośba do API jest o konwersację obecnie zalogowanego użytkownika z użytkownikiem o ID z parametru.
+            Docelowo parametr to int AccountId; na potrzeby testów Account? Acc
+             */
 
             if (Acc != null)
             {
                 return new()
                 {
                     new(){
-                        { "user", $"{Acc.fullName}"} ,
-                        { "content", "Cześć, masz już gotowy ten projekt?"} ,
-                        { "user1", "Tak, jeśli o to chodzi..."}
+                        { "user", $"{Acc.userId}"} ,
+                        { "fullName", $"{Acc.fullName}"} ,
+                        { "content", "Cześć, masz już gotowy ten projekt?"},
+                        { "chatId", "0152" }
                     },
                     new(){
-                        { "user", "Current User"} ,
+                        { "user", "0"} ,
+                        { "fullName", "Current User"} ,
                         { "content", "Tak, jeśli o to chodzi..."} ,
+                        { "chatId", "0152" }
                     },
                     new(){
-                        { "user", $"{Acc.fullName}"} ,
-                        { "content", "Nevermind, wszystko rozumiem..."}
+                        { "user", $"{Acc.userId}"} ,
+                        { "fullName", $"{Acc.fullName}"} ,
+                        { "content", "Nevermind, wszystko rozumiem..."},
+                        { "chatId", "0152" }
                     }
                 };
             }
             else
                 return new();
         }
+        public async static Task<bool> SendText(Dictionary<string, string> messageInfo)
+        {
 
+            try
+            {
+                await InitializeAsync();
+                Uri uri = new Uri(string.Format(baseUrl, "/chat"));
+                var response = await httpClient.PostAsJsonAsync<Dictionary<string, string>>(uri, messageInfo);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
 
 
 

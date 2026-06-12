@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using SOK_WPF.Models;
 using SOK_WPF.Services;
@@ -10,7 +11,7 @@ namespace SOK_WPF.ViewModels
     public partial class ActiveAdminsVM
     {
         [ObservableProperty]
-        List<Account>? accounts;
+        ObservableCollection<Account>? accounts;
 
         [ObservableProperty]
         public ChatUCVM chatUCVM;

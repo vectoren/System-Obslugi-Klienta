@@ -60,6 +60,8 @@
             </ListView.ItemTemplate>
 
         </ListView>
-        <local:ChatUC Grid.Row="2" DataContext="{Binding ChatUCVM}"/>
+        
+        <local:ChatUC 
+           Margin="0,8,0,0" Grid.Row="2" DataContext="{Binding ChatUCVM}"/>
     </Grid>
 </Page>
