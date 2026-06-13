@@ -37,13 +37,13 @@
                    Foreground="#272343"
                    Margin="0,0,0,8"
                    Padding="0"/>
-                    <TextBox Width="200" Margin="0,0,0,16"/>
+                    <TextBox Width="200" Margin="0,0,0,16" Text="{Binding Username}"/>
 
                     <Label Content="Hasło:"
                    Foreground="#272343"
                    Margin="0,0,0,8"
                    Padding="0"/>
-                    <PasswordBox Width="200" Margin="0,0,0,16" />
+                    <PasswordBox Width="200" Margin="0,0,0,16" x:Name="passwordBox"/>
 
                     <Button Content="Zaloguj się"
                         Height="40"
@@ -52,7 +52,8 @@
                         Foreground="#272343"
                         FontWeight="SemiBold"
                         BorderThickness="0"
-                        Command="{Binding LoginCommand}"/>
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=passwordBox}"/>
                 </StackPanel>
             </StackPanel>
         </Border>

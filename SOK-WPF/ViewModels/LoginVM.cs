@@ -18,8 +18,6 @@ namespace SOK_WPF.ViewModels
         [ObservableProperty]
         string username;
         [ObservableProperty]
-        string password;
-        [ObservableProperty]
         bool isLoginFailed = false;
         [ObservableProperty]
         bool isLogginingIn = false;
@@ -31,10 +29,11 @@ namespace SOK_WPF.ViewModels
         }
 
         [RelayCommand]
-        public async Task Login()
+        public async Task Login(object parameter)
         {
             IsLogginingIn = true;
-            var LoginAttempt = await RestService.Login(Username, Password);
+            var LoginAttempt = await RestService.Login(Username, (parameter as PasswordBox).Password);
+            var x = await RestService.SetActive(LoginAttempt.Item3.userId);
             IsLogginingIn = false;
             if (LoginAttempt.Item2)
             {

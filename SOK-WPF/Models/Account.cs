@@ -18,6 +18,8 @@ namespace SOK_WPF.Models
         [JsonIgnore]
         public DeliveryDetails? deliveryDetails { get; set; }
 
+        public bool isActive { get; set; }
+
 
         [JsonPropertyName("deliveryDetails")]
         public object? RawDeliveryDetails

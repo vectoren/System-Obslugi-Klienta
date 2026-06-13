@@ -39,7 +39,7 @@ namespace SOK_WPF.Services
 
         #region HTTP Methods
 
-        public async static Task<(string, bool)> Login(string email, string password)
+        public async static Task<(string, bool, Account)> Login(string email, string password)
         {
             try
             {
@@ -59,8 +59,10 @@ namespace SOK_WPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseAccount = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    
                     account = responseAccount;
-                    return ("SUCCESS", true);
+                    
+                    return ("SUCCESS", true, account);
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
 
@@ -76,9 +78,28 @@ namespace SOK_WPF.Services
 
                 };
 #endif
-                return (ex.Message, true);
+                return (ex.Message, true, account);
 
 
+            }
+        }
+
+        public static async Task<(string, bool)> SetActive(int? id)
+        {
+            try
+            {
+                await InitializeAsync();
+                Uri uri = new Uri(string.Format(baseUrl, $"/{id}/set-active"));
+                var response = await httpClient.PatchAsync(uri, null);
+                if (response.IsSuccessStatusCode)
+                {
+                    return ("SUCCESS", true);
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                return (ex.Message, false);
             }
         }
 
