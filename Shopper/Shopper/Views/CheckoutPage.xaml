@@ -39,6 +39,20 @@
                     </VerticalStackLayout>
                 </Border>
 
+				<Label Text="Uwagi do zamówienia (opcjonalnie)" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}"/>
+				<Border StrokeShape="RoundRectangle 12" Padding="15" StrokeThickness="1"
+						Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+						BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1E1E1E}">
+
+					<Editor x:Name="OrderNotesEditor"
+							Placeholder="Wpisz uwagi dla kuriera lub sklepu (np. kod do domofonu)..."
+							HeightRequest="90"
+							AutoSize="Disabled"
+							MaxLength="500"
+							TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
+							PlaceholderColor="Gray"/>
+				</Border>
+
                 <Label Text="Podsumowanie kosztów" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}"/>
                 <Border StrokeShape="RoundRectangle 12" Padding="15" StrokeThickness="1"
                         Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
