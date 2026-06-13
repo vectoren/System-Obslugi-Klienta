@@ -2,6 +2,7 @@ package backend.shop.controller;
 
 import backend.shop.model.Users;
 import backend.shop.service.UsersService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,9 @@ public class UsersController{
         }
         return new ResponseEntity<>("User created unsuccessfuly", HttpStatus.BAD_REQUEST);
     }
-    @GetMapping("/{id}/forgot-password")
-    public ResponseEntity<?> forgotPassword(@PathVariable int id){
-        var usersPassword = this.usersService.resetPassword(id);
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody String email){
+        var usersPassword = this.usersService.resetPassword(email);
         if(usersPassword.isPresent()){
             return new ResponseEntity<>(usersPassword.get(), HttpStatusCode.valueOf(200));
         }
@@ -50,6 +51,25 @@ public class UsersController{
             return new ResponseEntity<>(updatedUser.get(), HttpStatusCode.valueOf(200));
         }
         return new ResponseEntity<>("Something went wrong", HttpStatusCode.valueOf(400));
+    }
+
+    @PatchMapping("/{id}/set-active")
+    public ResponseEntity<?> setActive(@PathVariable int id){
+        boolean done = this.usersService.setActive(id);
+        if(done){
+            return new ResponseEntity<>("Done", HttpStatusCode.valueOf(200));
+        }
+        return new ResponseEntity<>("Done", HttpStatusCode.valueOf(404));
+
+    }
+
+    @GetMapping("/active-admins")
+    public ResponseEntity<?> getActiveAdmins() {
+        var activeAdmins = this.usersService.getActiveAdmins();
+        if (activeAdmins.isPresent()) {
+            return new ResponseEntity<>(activeAdmins.get(), HttpStatusCode.valueOf(200));
+        }
+        return new ResponseEntity<>("Error", HttpStatusCode.valueOf(400));
     }
 
 }

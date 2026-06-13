@@ -29,7 +29,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         r ->
-                                r.requestMatchers("/api/register", "/api/login", "/login").permitAll()
+                                r.requestMatchers("/api/register", "/api/login", "/api/forgot-password").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(f ->
                         f.loginProcessingUrl("/api/login")

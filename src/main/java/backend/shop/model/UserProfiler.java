@@ -1,14 +1,10 @@
 package backend.shop.model;
 
-import backend.shop.service.UserProfilerService;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserProfiler implements UserDetails {
     private final Users user;
@@ -18,10 +14,9 @@ public class UserProfiler implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-            return List.of();
-        /*return user.getRole().stream()
+        return this.user.getRole().stream()
                 .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());*/
+                .toList();
     }
 
     @Override

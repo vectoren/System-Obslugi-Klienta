@@ -1,14 +1,9 @@
 package backend.shop.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -85,12 +80,19 @@ public class Users{
         this.deliveryDetails = deliveryDetails;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public Users(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = Set.of("USER");
     }
 
     public Users(Users user) {
@@ -115,10 +117,13 @@ public class Users{
     @Column(unique = true)
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> role;
 
     @CreationTimestamp
     private LocalDate accountCreationDate;
+
+    private boolean isActive = false;
 
     @OneToOne(mappedBy = "userId", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private DeliveryDetails deliveryDetails;

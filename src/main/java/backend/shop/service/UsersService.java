@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UsersService {
@@ -62,16 +63,14 @@ public class UsersService {
         }
     }
 
-    public Optional<String> resetPassword(int id){
+    public Optional<Users> resetPassword(String email){
         try{
-            Optional<Users> user = this.repo.findById(id);
-            String newPassword = generateNewPassword();
+            Optional<Users> user = this.repo.getByEmail(email);
+
             if(user.isPresent()){
-                var realUser = user.get();
-                realUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
-                this.repo.save(realUser);
+                return user;
             }
-            return Optional.of(newPassword);
+            throw new Exception("User Not found");
         }
         catch (Exception ex){
             System.out.println(ex.getMessage());
@@ -79,13 +78,34 @@ public class UsersService {
         }
     }
 
-    private String generateNewPassword(){
-        StringBuilder sb = new StringBuilder();
-        char randomAscii;
-        for(int i = 0; i < 10; i++){
-            randomAscii = (char)((int)(Math.random() * 127));
-            sb.append(randomAscii);
+    public boolean setActive(int id){
+        try{
+            Optional<Users> userFound = this.repo.findById(id);
+            if(userFound.isPresent()) {
+                Users u = userFound.get();
+                u.setActive(true);
+                this.repo.save(u);
+                return true;
+            }
+            throw new Exception("user Not found");
         }
-        return sb.toString();
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public Optional<List<Users>> getActiveAdmins() {
+        try{
+            List<Users> activeAdmins = this.repo.findAllActiveByRoleWithRoles("ADMIN");
+            if(!activeAdmins.isEmpty()){
+                return Optional.of(activeAdmins);
+            }
+            throw new Exception("Blad");
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
     }
 }
