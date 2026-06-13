@@ -128,6 +128,7 @@ public class Users{
     @OneToOne(mappedBy = "userId", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private DeliveryDetails deliveryDetails;
 
+
     @Override
     public String toString() {
         return "Users{" +
