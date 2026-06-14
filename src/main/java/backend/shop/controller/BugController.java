@@ -24,7 +24,7 @@ public class BugController {
         return new ResponseEntity<>("Operacja nie udana", HttpStatusCode.valueOf(400));
     }
 
-    @GetMapping()
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllBugs(){
         Optional<List<Bug>> bugs = this.bugService.getAllBugs();
         if(bugs.isPresent()){
