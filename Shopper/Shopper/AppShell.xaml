@@ -6,15 +6,15 @@
     xmlns:local="clr-namespace:Shopper"
     xmlns:views="clr-namespace:Shopper.Views"
     Title="Shopper">
-
+    
     <TabBar>
         <Tab Title="Sklep">
             <ShellContent ContentTemplate="{DataTemplate views:ProductList}" />
         </Tab>
-        <Tab Title="👤 Konto">
-            <ShellContent ContentTemplate="{DataTemplate views:AccountPage}" />
+        <Tab Title="Zgłoś błąd">
+            <ShellContent ContentTemplate="{DataTemplate views:ReportPage}" />
         </Tab>
-        <Tab Title="🛒 Koszyk">
+        <Tab Title="Koszyk">
             <ShellContent ContentTemplate="{DataTemplate views:ShoppingCartPage}" />
         </Tab>
     </TabBar>
