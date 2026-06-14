@@ -25,7 +25,7 @@ public class WarningsController {
         return new ResponseEntity<>("Operacja nie udała się", HttpStatusCode.valueOf(404));
     }
 
-    @GetMapping()
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllWarnings(){
         var warnings = this.warningsService.getAllWarnings();
         if(warnings.isPresent()){
