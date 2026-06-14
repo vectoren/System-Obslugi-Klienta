@@ -38,7 +38,6 @@ public partial class CheckoutPage : ContentPage
             StreetEntry.Text = $"{acc.deliveryDetails.street}";
             PostalCodeEntry.Text = acc.deliveryDetails.townCode;
             CityEntry.Text = acc.deliveryDetails.city;
-            //PhoneEntry.Text = acc.phone;
         }
 
         CalculateSummary();
@@ -69,8 +68,7 @@ public partial class CheckoutPage : ContentPage
         if (string.IsNullOrWhiteSpace(FullNameEntry.Text) ||
             string.IsNullOrWhiteSpace(StreetEntry.Text) ||
             string.IsNullOrWhiteSpace(PostalCodeEntry.Text) ||
-            string.IsNullOrWhiteSpace(CityEntry.Text) ||
-            string.IsNullOrWhiteSpace(PhoneEntry.Text))
+            string.IsNullOrWhiteSpace(CityEntry.Text))
         {
             await DisplayAlertAsync("Błąd", "Proszę uzupełnić wszystkie dane dostawy.", "OK");
             return;
@@ -128,7 +126,22 @@ public partial class CheckoutPage : ContentPage
             if (!success) return;
         }
 
-        if (paymentSuccess)
+        Warning warning = new Warning(
+            issueTopic: "Zamówienie nr " + orderId,
+            issueStatus: "Nowe",
+            recivedDate: DateTime.Now.ToString("yyyy-MM-dd"),
+            affectedProducts: order.products,
+            description: string.IsNullOrWhiteSpace(OrderNotesEditor.Text) ? "" : OrderNotesEditor.Text,
+            expectations: string.IsNullOrWhiteSpace(OrderExpectations.Text) ? "" : OrderExpectations.Text,
+            userId: acc,
+            orderId: order
+        );
+
+        var (warningResponse, warningSuccess) = await ProductsRestService.SendNewWarning(warning);
+
+
+
+        if (paymentSuccess && warningSuccess)
         {
             await DisplayAlertAsync("SUCCESS", $"Zamówienie zostało złożone.\nWybrana płatność: {selectedPayment}! \nProsimy o cierpliwość w oczekiwaniu na paczkę.", "OK");
             await Shell.Current.GoToAsync("/list");
