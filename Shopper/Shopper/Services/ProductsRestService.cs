@@ -102,5 +102,26 @@ namespace Shopper.Services
                 return (ex.Message, false);
             }
         }
+
+        public static async Task<(string, bool)> SendNewBug(Bug bug)
+        {
+            try
+            {
+                Uri uri = new Uri(string.Format(baseUrl, "bugs/add-new"));
+                var json = JsonSerializer.Serialize(bug, jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return ("Bug report sent successfully", true);
+                }
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception(errorMessage);
+            }
+            catch (Exception ex)
+            {
+                return (ex.Message, false);
+            }
+        }
     }
 }

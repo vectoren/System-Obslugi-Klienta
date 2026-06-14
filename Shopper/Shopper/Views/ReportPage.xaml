@@ -12,7 +12,7 @@
                 <Label Text="Opisz napotkany problem, a nasz zespół zajmie się tym jak najszybciej." FontSize="14" TextColor="Gray" HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="5">
+            <!--<VerticalStackLayout Spacing="5">
                 <Label Text="Kategoria zgłoszenia" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Primary}"/>
                 <Border StrokeShape="RoundRectangle 8" StrokeThickness="1" Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#333333}" Padding="5,0">
                     <Picker x:Name="CategoryPicker" Title="Wybierz kategorię...">
@@ -25,7 +25,7 @@
                         </Picker.Items>
                     </Picker>
                 </Border>
-            </VerticalStackLayout>
+            </VerticalStackLayout>-->
 
             <VerticalStackLayout Spacing="5">
                 <Label Text="Krótki tytuł" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Primary}"/>
