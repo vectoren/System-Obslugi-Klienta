@@ -37,6 +37,8 @@ namespace SOK_WPF.ViewModels
             IsLogginingIn = false;
             if (LoginAttempt.Item2)
             {
+                _ = Task.Run(async () => await ChatService.ConnectWithCookiesAsync());
+
                 _mainWindow.Show();
                 _loginWindow.Close();
             }

@@ -14,7 +14,7 @@ namespace SOK_WPF.Services
     public static class RestService
     {
         public static HttpClient httpClient;
-        private static CookieContainer cookieContainer;
+        public static CookieContainer cookieContainer;
         public static Account? account;
         private static readonly string baseUrl = "http://localhost:8080/api{0}";
         public static readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions
