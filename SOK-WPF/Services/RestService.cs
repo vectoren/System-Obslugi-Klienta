@@ -135,7 +135,7 @@ namespace SOK_WPF.Services
             }
         }
 
-
+        #region Historia Czatu Stara wersja
         public async static Task<ObservableCollection<Dictionary<string, string>>> GetChatHistory(Account? Acc)
         {
 
@@ -171,6 +171,31 @@ namespace SOK_WPF.Services
             else
                 return new();
         }
+        #endregion
+        #region Historia Czatu Nowa wersja
+        public async static Task<List<ChatMessage>> GetChatHistory(int senderId, int receiverId)
+        {
+            try
+            {
+                Uri uri = new Uri(string.Format(baseUrl, $"/chat/{senderId}/{receiverId}"));
+                var response = await httpClient.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseMessages = JsonSerializer.Deserialize<List<ChatMessage>>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    if (responseMessages.Count > 0) return responseMessages;
+                    else throw new Exception("Pusta lista");
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                return new List<ChatMessage>();
+            }
+
+        }
+
+        #endregion
         public async static Task<bool> SendText(Dictionary<string, string> messageInfo)
         {
 
