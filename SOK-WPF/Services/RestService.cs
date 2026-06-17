@@ -209,6 +209,29 @@ namespace SOK_WPF.Services
 
         #region Zgłoszone błędy
 
+        public async static Task<ObservableCollection<BugReport>> GetBugReports()
+        {
+            try
+            {
+                await InitializeAsync();
+                Uri uri = new Uri(string.Format(baseUrl, "/bugs/getAll"));
+                var response = await httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseAccounts = JsonSerializer.Deserialize<ObservableCollection<BugReport>>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    if (responseAccounts != null && responseAccounts.Count > 0)
+                        return responseAccounts;
+                    else
+                        throw new Exception("Pusta lista");
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch
+            {
+                return new ObservableCollection<BugReport>();
+            }
+        }
+
         #endregion
 
 

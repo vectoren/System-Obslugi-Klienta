@@ -37,8 +37,8 @@
                     <DataTemplate>
                         <Border Background="#fffffe" Margin="0,8" Padding="8">
                             <StackPanel>
-                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#272343"/>
-                                <TextBlock Text="{Binding ReportDay, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                <TextBlock Text="{Binding bugName}" FontWeight="SemiBold" Foreground="#272343"/>
+                                <TextBlock Text="{Binding reportDate, StringFormat='{}{0:dd.MM.yyyy}'}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -49,10 +49,10 @@
                 Grid.Column="1"
                         Background="#fffffe">
                 <StackPanel Margin="8" DataContext="{Binding SelectedReport}">
-                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding Name, StringFormat='Błąd: {0}', FallbackValue='(Nie wybrano błędu)'}" Foreground="#272343"/>
-                    <TextBlock FontWeight="SemiBold" Text="{Binding ReportDay, StringFormat='Data zgłoszenia: {0:dd.MM.yyyy}'}" Foreground="#2d334a"/>
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding bugName, StringFormat='Błąd: {0}', FallbackValue='(Nie wybrano błędu)'}" Foreground="#272343"/>
+                    <TextBlock FontWeight="SemiBold" Text="{Binding reportDate, StringFormat='Data zgłoszenia: {0:dd.MM.yyyy}'}" Foreground="#2d334a"/>
                     <TextBlock Text="Opis" Foreground="#2d334a"/>
-                    <TextBox VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding Description}" Focusable="False"/>
+                    <TextBox VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding bugDescription}" Focusable="False"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

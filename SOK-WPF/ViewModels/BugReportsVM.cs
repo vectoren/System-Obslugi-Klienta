@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SOK_WPF.Models;
+using SOK_WPF.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,7 @@ namespace SOK_WPF.ViewModels
 
         public async Task RefreshBugReports()
         {
-
+            BugReports = await RestService.GetBugReports();
         }
 
         
