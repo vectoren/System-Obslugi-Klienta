@@ -59,9 +59,9 @@ namespace SOK_WPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseAccount = JsonSerializer.Deserialize<Account>(await response.Content.ReadAsStringAsync(), jsonOptions);
-                    
-                    account = responseAccount;
-                    
+
+                    account = responseAccount ?? new();
+
                     return ("SUCCESS", true, account);
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
@@ -96,6 +96,7 @@ namespace SOK_WPF.Services
 
 
         public async static Task<ObservableCollection<Account>> GetActiveAdmins()
+        
         {
             try
             {
@@ -111,7 +112,7 @@ namespace SOK_WPF.Services
             }
             catch
             {
-               return new ObservableCollection<Account>();
+                return new ObservableCollection<Account>();
             }
         }
 
@@ -153,7 +154,7 @@ namespace SOK_WPF.Services
         }
         #endregion
         #region Historia Czatu Nowa wersja
-        public async static Task<List<ChatMessage>> GetChatHistory(int senderId, int receiverId)
+        public async static Task<ObservableCollection<ChatMessage>> GetChatHistory(int senderId, int receiverId)
         {
             try
             {
@@ -162,7 +163,7 @@ namespace SOK_WPF.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseMessages = JsonSerializer.Deserialize<List<ChatMessage>>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    var responseMessages = JsonSerializer.Deserialize<ObservableCollection<ChatMessage>>(await response.Content.ReadAsStringAsync(), jsonOptions);
                     if (responseMessages.Count > 0)
                         return responseMessages;
                     else
@@ -172,7 +173,7 @@ namespace SOK_WPF.Services
             }
             catch (Exception ex)
             {
-                return new List<ChatMessage>();
+                return new ObservableCollection<ChatMessage>();
             }
 
         }

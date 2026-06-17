@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SOK_WPF.Models
 {
@@ -10,7 +11,8 @@ namespace SOK_WPF.Models
         public string sendDate { get; set; }
         public int sender { get; set; }
         public int recipient { get; set; }
-
+        [JsonIgnore]
+        public Account? user { get; set; }
         public ChatMessage() { }
 
     }

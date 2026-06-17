@@ -7,7 +7,7 @@ namespace SOK_WPF.Models
     public class Account
     {
         //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)]
-        public int? userId { get; set; }
+        public int userId { get; set; }
         [JsonIgnore]
         public string fullName { get => $"{firstName} {lastName}"; }
         public string firstName { get; set; }

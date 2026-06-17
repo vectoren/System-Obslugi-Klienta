@@ -9,7 +9,7 @@ namespace SOK_WPF.ViewModels
     public partial class ChatUCVM : ObservableObject
     {
         [ObservableProperty]
-        ObservableCollection<Dictionary<string, string>> chatHistory = new();
+        ObservableCollection<ChatMessage> chatHistory = new();
 
         [ObservableProperty]
         string text;
@@ -19,30 +19,25 @@ namespace SOK_WPF.ViewModels
 
         public ChatUCVM()
         {
-            _ = GetChat();
+            if (Acc != null)
+                _ = GetChat();
 
-            // Subskrypcja zdarzenia z ChatService
             ChatService.OnMessageReceived += HandleIncomingMessage;
         }
 
         public async Task GetChat()
         {
-            ChatHistory = await RestService.GetChatHistory(Acc);
+            ChatHistory = await RestService.GetChatHistory(RestService.account.userId, Acc.userId);
         }
 
         private void HandleIncomingMessage(ChatMessage message)
         {
-            // Gdy serwer rozgłosi nową wiadomość przez WebSocket,
-            // mapujemy obiekt ChatMessage na Twój format Dictionary<string, string> i wrzucamy do UI
-            var mappedMessage = new Dictionary<string, string>
-            {
-                { "user", message.sender.ToString() },
-                { "fullName", message.sender == RestService.account?.userId ? "Ja" : "Rozmówca" },
-                { "content", message.message },
-                { "chatId", "0152" } // Tymczasowe sztywne ID
-            };
+            if (message.sender == Acc.userId)
+                message.user = Acc;
+            else
+                message.user = RestService.account;
+            ChatHistory.Add(message);
 
-            ChatHistory.Add(mappedMessage);
         }
 
         partial void OnAccChanged(Account? value)
@@ -55,19 +50,16 @@ namespace SOK_WPF.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Text)) return;
 
-            // Budujemy obiekt na bazie faktycznych danych wpisanych przez użytkownika
             var message = new ChatMessage()
             {
                 message = Text,
                 sendDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
-                sender = 1,
-                recipient = 2
+                sender = RestService.account.userId,
+                recipient = Acc.userId,
+                user = RestService.account
             };
-
-            // Po prostu wysyłamy przez istniejące, otwarte połączenie
             ChatService.SendMessage(message);
 
-            // Czyszczenie pola tekstowego po wysłaniu
             Text = string.Empty;
         }
     }
