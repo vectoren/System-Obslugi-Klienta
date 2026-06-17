@@ -33,11 +33,11 @@ namespace SOK_WPF.ViewModels
         {
             IsLogginingIn = true;
             var LoginAttempt = await RestService.Login(Username, (parameter as PasswordBox).Password);
-            var x = await RestService.SetActive(LoginAttempt.Item3.userId);
-            IsLogginingIn = false;
             if (LoginAttempt.Item2)
-            {
-                _ = Task.Run(async () => await ChatService.ConnectWithCookiesAsync());
+            {            
+                var x = await RestService.SetActive(LoginAttempt.Item3.userId);
+
+               await ChatService.ConnectWithCookiesAsync();
 
                 _mainWindow.Show();
                 _loginWindow.Close();
@@ -46,7 +46,7 @@ namespace SOK_WPF.ViewModels
             {
                 IsLoginFailed = true;
             }
-
+            IsLogginingIn = false;
         }
 
 

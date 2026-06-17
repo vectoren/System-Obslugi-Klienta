@@ -69,17 +69,7 @@ namespace SOK_WPF.Services
             }
             catch (Exception ex)
             {
-#if DEBUG
-                account = new()
-                {
-                    userId = 0,
-                    firstName = "Current",
-                    lastName = "User",
-
-                };
-#endif
-                return (ex.Message, true, account);
-
+                return (ex.Message, false, account);
 
             }
         }
@@ -121,17 +111,7 @@ namespace SOK_WPF.Services
             }
             catch
             {
-                return new ObservableCollection<Account>()
-                {
-                    new Account { userId = 1, firstName = "Jan", lastName = "Kowalski", email = "jan@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 2, firstName = "Anna", lastName = "Nowak", email = "anna@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 3, firstName = "Piotr", lastName = "Zieliński", email = "piotr@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 4, firstName = "Maria", lastName = "Wójcik", email = "maria@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 5, firstName = "Krzysztof", lastName = "Wiśniewski", email = "krzysztof@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 6, firstName = "Agnieszka", lastName = "Kaczmarek", email = "agnieszka@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 7, firstName = "Tomasz", lastName = "Mazur", email = "tomasz@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") },
-                    new Account { userId = 8, firstName = "Ewa", lastName = "Michalska", email = "ewa@test.pl", password = "password", accountCreationDate = DateTime.UtcNow.ToString("o") }
-                };
+               return new ObservableCollection<Account>();
             }
         }
 
@@ -183,8 +163,10 @@ namespace SOK_WPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseMessages = JsonSerializer.Deserialize<List<ChatMessage>>(await response.Content.ReadAsStringAsync(), jsonOptions);
-                    if (responseMessages.Count > 0) return responseMessages;
-                    else throw new Exception("Pusta lista");
+                    if (responseMessages.Count > 0)
+                        return responseMessages;
+                    else
+                        throw new Exception("Pusta lista");
                 }
                 throw new Exception(await response.Content.ReadAsStringAsync());
             }
