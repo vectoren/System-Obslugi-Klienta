@@ -12,7 +12,6 @@ namespace SOK_WPF.ViewModels
 {
     public partial class LoginVM : ObservableObject
     {
-        public MainWindow _mainWindow;
         private LoginWindow _loginWindow;
 
         [ObservableProperty]
@@ -22,9 +21,8 @@ namespace SOK_WPF.ViewModels
         [ObservableProperty]
         bool isLogginingIn = false;
 
-        public LoginVM(MainWindow mainWindow, LoginWindow loginWindow)
+        public LoginVM(LoginWindow loginWindow)
         {
-            _mainWindow = mainWindow;
             _loginWindow = loginWindow;
         }
 
@@ -39,7 +37,7 @@ namespace SOK_WPF.ViewModels
 
                await ChatService.ConnectWithCookiesAsync();
 
-                _mainWindow.Show();
+                new MainWindow().Show();
                 _loginWindow.Close();
             }
             else
