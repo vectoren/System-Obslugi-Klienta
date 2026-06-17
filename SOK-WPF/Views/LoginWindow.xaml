@@ -4,13 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SOK_WPF.Views"
+      xmlns:vm="clr-namespace:SOK_WPF.ViewModels"
       Background="#e3f6f5"
       mc:Ignorable="d"
       Height="450"
       Width="320"
-        FontSize="16"
+      FontSize="16"
       Title="Login | SOK"
-        ResizeMode="NoResize">
+      ResizeMode="NoResize">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis"/>
     </Window.Resources>

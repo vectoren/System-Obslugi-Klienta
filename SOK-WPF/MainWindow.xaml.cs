@@ -21,15 +21,11 @@ namespace SOK_WPF
 
         Dashboard dashboard = new Dashboard();
 
-        LoginWindow loginPage = new LoginWindow();
-
 
         public MainWindow()
         {
             InitializeComponent();
 
-            loginPage.DataContext = new ViewModels.LoginVM(this, loginPage);
-            loginPage.ShowDialog();
 
             dashboard.DataContext = new ViewModels.DashboradVM(MainFrame);
 
