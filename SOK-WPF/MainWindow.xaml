@@ -6,16 +6,15 @@
         xmlns:local="clr-namespace:SOK_WPF"
         xmlns:views="clr-namespace:SOK_WPF.Views"
         mc:Ignorable="d"
-        Visibility="Hidden"
         FontSize="16"
         Title="SOK Support Admin" Height="600" Width="1000">
-    <Grid ColumnDefinitions="3*,7*">
+    <Grid ColumnDefinitions="3*,auto,7*">
         <Frame Grid.Column="0">
             <Frame.Content>
                 <views:ActiveAdminsPage/>
             </Frame.Content>
         </Frame>
-        <Frame Grid.Column="1" x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+        <Frame Grid.Column="2" x:Name="MainFrame" NavigationUIVisibility="Hidden" />
 
     </Grid>
 </Window>
