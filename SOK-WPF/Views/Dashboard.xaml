@@ -35,7 +35,7 @@
             <TextBlock Text="Uwagi do&#x0a;zamówień" Style="{DynamicResource InCircle}"/>
             <Grid VerticalAlignment="Top" HorizontalAlignment="Right">
                 <Ellipse Fill="#272343" Margin="16" Width="56" Height="56"/>
-                <TextBlock Text="256" Style="{DynamicResource InCircle}" Foreground="White"/>
+                <TextBlock Text="{Binding OrderIssVM.IssuesList.Count}" Style="{DynamicResource InCircle}" Foreground="White"/>
             </Grid>
         </Grid>
         <Grid Width="260" Height="260" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -46,7 +46,7 @@
             <TextBlock Text="Zgłoszone&#x0a;błędy" Style="{DynamicResource InCircle}"/>
             <Grid VerticalAlignment="Top" HorizontalAlignment="Right">
                 <Ellipse Fill="#272343" Margin="16" Width="56" Height="56" />
-                <TextBlock Text="256" Style="{DynamicResource InCircle}" Foreground="White"/>
+                <TextBlock Text="{Binding BugRepVM.BugReports.Count}" Style="{DynamicResource InCircle}" Foreground="White"/>
             </Grid>
         </Grid>
     </StackPanel>

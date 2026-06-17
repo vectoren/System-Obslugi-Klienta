@@ -36,9 +36,9 @@
                     <DataTemplate>
                         <Border Background="#fffffe" Margin="0,8" Padding="8">
                             <StackPanel>
-                                <TextBlock Text="{Binding Id, StringFormat='Zgłoszenie nr {0}'}" FontWeight="SemiBold" Foreground="#272343"/>
-                                <TextBlock Text="{Binding IssuedOn, StringFormat='{}{0:dd.MM.yyyy}'}"/>
-                                <TextBlock Text="{Binding IssueStatus, StringFormat='Status: {0}'}"/>
+                                <TextBlock Text="{Binding warningId, StringFormat='Zgłoszenie nr {0}'}" FontWeight="SemiBold" Foreground="#272343"/>
+                                <TextBlock Text="{Binding recivedDate, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                <TextBlock Text="{Binding issueStatus, StringFormat='Status: {0}'}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -51,20 +51,20 @@
                 VerticalAlignment="Stretch"
                 >
                 <StackPanel Margin="8" DataContext="{Binding SelectedIssue}" VerticalAlignment="Stretch">
-                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding Id, StringFormat='Zgłoszenie nr: {0}', FallbackValue='(Nie wybrano zgłoszenia)'}" Foreground="#272343"/>
-                    <TextBlock FontWeight="SemiBold" Text="{Binding IssuedOn, StringFormat='Data zgłoszenia: {0:dd.MM.yyyy}'}" Foreground="#2d334a"/>
-                    <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding OrderId, StringFormat='Dotyczy zamówienia nr {0}'}"/>
-                    <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding IssueStatus, StringFormat='Status zgłoszenia: {0}'}"/>
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{Binding warningId, StringFormat='Zgłoszenie nr: {0}', FallbackValue='(Nie wybrano zgłoszenia)'}" Foreground="#272343"/>
+                    <TextBlock FontWeight="SemiBold" Text="{Binding recivedDate, StringFormat='Data zgłoszenia: {0:dd.MM.yyyy}'}" Foreground="#2d334a"/>
+                    <!--<TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding OrderId, StringFormat='Dotyczy zamówienia nr {0}'}"/>-->
+                    <TextBlock VerticalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding issueStatus, StringFormat='Status zgłoszenia: {0}'}"/>
                     <TextBlock Text="Opis" Foreground="#2d334a"/>
-                    <TextBox Focusable="False" Text="{Binding Description}" TextWrapping="Wrap"/>
+                    <TextBox Focusable="False" Text="{Binding description}" TextWrapping="Wrap"/>
 
                     <TextBlock Text="Oczekiwania klienta" Foreground="#2d334a"/>
-                    <TextBox Focusable="False" Text="{Binding Expectations}"  TextWrapping="Wrap"/>
+                    <TextBox Focusable="False" Text="{Binding expectations}"  TextWrapping="Wrap"/>
 
 
 
                 </StackPanel>
-                <Button Content="Skontaktuj się z klientem" Command="{Binding ClientContactCommand}" VerticalAlignment="Bottom"  Margin="8,12"/>
+                <!--<Button Content="Skontaktuj się z klientem" Command="{Binding ClientContactCommand}" VerticalAlignment="Bottom"  Margin="8,12"/>-->
             </StackPanel>
         </Grid>
     </StackPanel>

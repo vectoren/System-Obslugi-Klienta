@@ -8,10 +8,15 @@ namespace SOK_WPF.Views
     /// </summary>
     public partial class OrdersIssues : Page
     {
+        OrdersIssuesVM OIVM;
         public OrdersIssues(Frame frame)
         {
-            DataContext = new OrdersIssuesVM(frame);
+            OIVM = new OrdersIssuesVM(frame);
+            DataContext = OIVM;
+
             InitializeComponent();
+
         }
+        
     }
 }

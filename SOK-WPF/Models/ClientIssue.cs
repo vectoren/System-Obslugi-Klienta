@@ -6,20 +6,17 @@ namespace SOK_WPF.Models
 {
     public class ClientIssue
     {
-        public int Id { get; set; }
+        public int warningId { get; set; }
 
-        public string IssueTopic { get; set; }
+        public string issueTopic { get; set; }
 
-        public int ClientId { get; set; }
-        public string ClientMail { get; set; }
+        public string issueStatus { get; set; }
 
-        public int OrderId { get; set; }
-        public string IssueStatus { get; set; }
+        public DateOnly recivedDate { get; set; }
+        public string? affectedProducts { get; set; }
+        public string? description { get; set; }
+        public string? expectations { get; set; }
 
-        public DateOnly IssuedOn { get; set; }
-        public List<Product> AffectedProducts { get; set; }
-        public string? Description { get; set; }
-        public string? Expectations { get; set; }
-        
+
     }
 }

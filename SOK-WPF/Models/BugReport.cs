@@ -6,9 +6,9 @@ namespace SOK_WPF.Models
 {
     public class BugReport
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public DateOnly? ReportDay { get; set; }
+        public int bugId {  get; set; }
+        public string bugName { get; set; }
+        public string bugDescription { get; set; }
+        public DateOnly reportDate { get; set; }
     }
 }

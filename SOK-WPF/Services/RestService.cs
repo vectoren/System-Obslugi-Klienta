@@ -179,6 +179,40 @@ namespace SOK_WPF.Services
         }
 
         #endregion
+
+        #region Uwagi Do zamówień
+
+        public async static Task<ObservableCollection<ClientIssue>> GetClientIssues()
+        {
+            try
+            {
+                await InitializeAsync();
+                Uri uri = new Uri(string.Format(baseUrl, "/warnings/getAll"));
+                var response = await httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseAccounts = JsonSerializer.Deserialize<ObservableCollection<ClientIssue>>(await response.Content.ReadAsStringAsync(), jsonOptions);
+                    if(responseAccounts != null && responseAccounts.Count > 0)
+                        return responseAccounts;
+                    else
+                        throw new Exception("Pusta lista");
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch
+            {
+                return new ObservableCollection<ClientIssue>();
+            }
+        }
+
+        #endregion
+
+        #region Zgłoszone błędy
+
+        #endregion
+
+
+
         public async static Task<bool> SendText(Dictionary<string, string> messageInfo)
         {
 

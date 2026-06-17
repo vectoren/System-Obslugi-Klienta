@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SOK_WPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Controls;
 
@@ -11,11 +12,7 @@ namespace SOK_WPF.ViewModels
     public partial class BugReportsVM : ObservableObject
     {
         [ObservableProperty]
-        List<BugReport>? bugReports = new List<BugReport>()
-        {
-            new(){Name = "Brak możliwości zakupu", Description = "Po naciśnięciu przycisku \"Zapłać\" nic się nie dzieje.", ReportDay = new(2026, 05, 12)},
-            new(){Name = "Niepełny koszyk", Description = "Dodawanie artykułu do koszyka nie zawsze działa.", ReportDay = new(2026, 05, 12)}
-        };
+        ObservableCollection<BugReport>? bugReports = new();
         public Frame MainFrame { get; set; }
 
         [ObservableProperty]
@@ -24,8 +21,16 @@ namespace SOK_WPF.ViewModels
         public BugReportsVM(Frame frame)
         {
             MainFrame = frame;
+            _ = RefreshBugReports();
         }
+
+        public async Task RefreshBugReports()
+        {
+
+        }
+
+        
         [RelayCommand]
-        public void GoBack() => MainFrame.GoBack();
+        public async Task GoBack() { await RefreshBugReports(); MainFrame.GoBack(); }
     }
 }
