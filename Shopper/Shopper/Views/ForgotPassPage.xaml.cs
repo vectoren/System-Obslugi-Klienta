@@ -31,6 +31,7 @@ public partial class ForgotPassPage : ContentPage
             await DisplayAlertAsync("Błąd", message, "OK");
             return;
         }
+        await DisplayAlertAsync("Sukces", message, "OK"); return;
 
 
     }

@@ -156,7 +156,23 @@ namespace Shopper.Services
 
         public static async Task<(string, bool)> RestartPassword(string email)
         {
-            return ("Nie można zresetować hasła. Prosimy spróbować ponownie później.", false);
+            try
+            {
+                GetClient();
+                Uri uri = new Uri(string.Format(baseUrl, "/forgot-password"));
+                var jason = JsonSerializer.Serialize(new { email }, jsonOptions);
+                var content = new StringContent(jason, Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return ("Hasło zostało zresetowane, proszę sprawdzić skrzynkę e-mail", true);
+                }
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
+            catch(Exception ex) 
+            {
+                return (ex.Message, false);
+            }
         }
     }
 }
