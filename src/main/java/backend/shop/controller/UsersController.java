@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -28,12 +30,12 @@ public class UsersController{
         return new ResponseEntity<>("User created unsuccessfuly", HttpStatus.BAD_REQUEST);
     }
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody String email){
-        var usersPassword = this.usersService.resetPassword(email);
-        if(usersPassword.isPresent()){
-            return new ResponseEntity<>(usersPassword.get(), HttpStatusCode.valueOf(200));
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> data){
+        String email = data.get("email");
+        if(this.usersService.restartPassword(email)){
+            return new ResponseEntity<>("Haslo zostalo zmienione, wisomosc na mailu", HttpStatusCode.valueOf(200));
         }
-        return new ResponseEntity<>("Cos poszło nie tak", HttpStatus.valueOf(400));
+        return new ResponseEntity<>("Cos poszlo nie tak", HttpStatusCode.valueOf(404));
     }
 
     @DeleteMapping("/{id}/delete")

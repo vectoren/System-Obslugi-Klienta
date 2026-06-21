@@ -2,6 +2,8 @@ package backend.shop.service;
 
 import backend.shop.model.Users;
 import backend.shop.repo.UsersRepo;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,11 @@ import java.util.List;
 @Service
 public class UsersService {
     private final UsersRepo repo;
+    private final JavaMailSender mailSender;
 
-    public UsersService(UsersRepo repo){
+    public UsersService(UsersRepo repo, JavaMailSender sender){
         this.repo = repo;
+        this.mailSender = sender;
     }
 
     public Optional<Users> registerUser(Users user){
@@ -63,19 +67,41 @@ public class UsersService {
         }
     }
 
-    public Optional<Users> resetPassword(String email){
+    public boolean restartPassword(String email){
         try{
-            Optional<Users> user = this.repo.getByEmail(email);
+            var containsUser = this.repo.getByEmail(email);
 
-            if(user.isPresent()){
-                return user;
-            }
-            throw new Exception("User Not found");
+            if(containsUser.isEmpty()) throw new Exception("user Not Found");
+
+            String newPassword = generateNewPassword();
+            var user = containsUser.get();
+            user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+            this.repo.save(user);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom("myprogroad@gmail.com");
+            mailMessage.setTo(email);
+            mailMessage.setSubject("Nowe Haslo");
+            mailMessage.setText("Witaj dostaliśmy prośbę o restart hasła z tego konta email. Twoje hasło to: " + newPassword +
+                    "Jeśli to ty, nic sie nie dzieje, jesli to nie ty, prosimy o natychmiastową zmianę hasła w celach bezpieczeństwa twojego Konta");
+
+            mailSender.send(mailMessage);
+            return true;
         }
-        catch (Exception ex){
-            System.out.println(ex.getMessage());
-            return Optional.empty();
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
         }
+    }
+
+    private String generateNewPassword(){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < 10; i++){
+            char c = (char)((Math.random() * 95) + 33);
+            if(c == ' ') c = (char)((Math.random() * 95) + 33);
+            sb.append(c);
+        }
+        return sb.toString();
     }
 
     public boolean setActive(int id){
